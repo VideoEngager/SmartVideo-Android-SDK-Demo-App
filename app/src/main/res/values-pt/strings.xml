@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DemoApp</string>
+    <string name="app_version">Versão</string>
+    <string name="staging_server">Staging Servidor</string>
+    <string name="prod_server">Prod Servidor</string>
+    <string name="start_audio_button">Iniciar áudio</string>
+    <string name="start_video_button">Iniciar vídeo</string>
+    <string name="start_chat_button">Start Chat</string>
+</resources>

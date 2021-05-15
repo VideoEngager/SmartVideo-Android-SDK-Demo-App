@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DemoApp</string>
+    <string name="app_version">Version</string>
+    <string name="staging_server">Staging Server</string>
+    <string name="prod_server">Prod Server</string>
+    <string name="start_audio_button">Start Audio</string>
+    <string name="start_video_button">Start Video</string>
+    <string name="version" translatable="false">Version 1.7</string>
+    <string name="start_chat_button">Start Chat</string>
+</resources>
