@@ -164,6 +164,8 @@ val listener = object : VideoEngager.EventListener(){
 }
 
 findViewById<Button>(R.id.button_audio).setOnClickListener {
+  //allow more verbose debug Logcat messages 
+  VideoEngager.SDK_DEBUG=true
   //change some additional values like preferred Language
   params.genesys_cloud_params_init!!.Language=VideoEngager.Language.ENGLISH
   val video = VideoEngager(this, params.genesys_cloud_params_init!!, VideoEngager.Engine.genesys)
@@ -174,6 +176,8 @@ findViewById<Button>(R.id.button_audio).setOnClickListener {
 }
 
 findViewById<Button>(R.id.button_video).setOnClickListener {
+  //allow more verbose debug Logcat messages 
+  VideoEngager.SDK_DEBUG=true
   //change some additional values like preferred Language
   params.genesys_cloud_params_init!!.Language=VideoEngager.Language.ENGLISH
   val video = VideoEngager(this, params.genesys_cloud_params_init!!, VideoEngager.Engine.genesys)
