@@ -23,16 +23,20 @@ The VideoEngager SDK for Android allows you to integrate SmartVideo application 
 ## Installation
 
 ### Gradle
-Add ***videoengager-sdk-release.aar*** to `libs` folder in project .
+Add the necessary MavenCentral repository into your `build.gradle` file:
 
-Add the necessary libraries into your `build.gradle` file:
+```
+repositories {
+        ...
+        mavenCentral()
+    }
+```
+
+Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    implementation 'com.google.code.gson:gson:2.8.6'  
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"  
-    implementation 'com.squareup.picasso:picasso:2.8'  
-    implementation 'org.webrtc:google-webrtc:1.0.22270'
+    ....
+    implementation 'com.videoengager:smartvideo-sdk:1.0.0'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").
