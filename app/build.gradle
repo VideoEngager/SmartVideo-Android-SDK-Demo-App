@@ -42,10 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //sdk imports release
-    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
-    implementation 'com.squareup.picasso:picasso:2.8'
-    implementation 'org.webrtc:google-webrtc:1.0.22270'
+    implementation 'com.videoengager:videoengager-sdk:1.0.1'
+
 
 }
