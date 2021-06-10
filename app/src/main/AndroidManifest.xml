@@ -12,6 +12,7 @@
         <activity android:name=".LangSelectorActivity"></activity>
         <activity android:name=".GC_Activity"  android:screenOrientation="portrait" />
         <activity android:name=".VE_Activity"  android:screenOrientation="portrait" />
+        <activity android:name=".GE_Activity"  android:screenOrientation="portrait" />
         <activity android:name=".WebChat"  android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">

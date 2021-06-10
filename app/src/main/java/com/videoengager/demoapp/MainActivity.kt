@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.button_ge).setOnClickListener {
-            Toast.makeText(this, "Under Construction!", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this,GE_Activity::class.java))
         }
 
             if(Lang==null){
