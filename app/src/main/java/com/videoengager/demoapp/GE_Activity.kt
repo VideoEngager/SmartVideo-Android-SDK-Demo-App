@@ -7,11 +7,13 @@ package com.videoengager.demoapp
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
@@ -19,11 +21,12 @@ import java.util.*
 
 class GE_Activity : AppCompatActivity() {
     lateinit var sett:Settings
+    lateinit var preferences : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_e)
-
+        preferences = getSharedPreferences("genesys_engage", MODE_PRIVATE)
 
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
@@ -42,6 +45,17 @@ class GE_Activity : AppCompatActivity() {
             } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
         }
 
+        //load settings previous settings
+        findViewById<EditText>(R.id.url).setText(preferences.getString("url",""))
+        findViewById<EditText>(R.id.service).setText(preferences.getString("service",""))
+        findViewById<EditText>(R.id.agenturl).setText(preferences.getString("agenturl",""))
+        findViewById<EditText>(R.id.fname).setText(preferences.getString("fname",""))
+        findViewById<EditText>(R.id.lname).setText(preferences.getString("lname",""))
+        findViewById<EditText>(R.id.subject).setText(preferences.getString("subject",""))
+        findViewById<EditText>(R.id.mail).setText(preferences.getString("mail",""))
+        findViewById<EditText>(R.id.auth).setText(preferences.getString("auth",""))
+
+
 
     }
 
@@ -59,7 +73,18 @@ class GE_Activity : AppCompatActivity() {
                 AuthorizationHeader = findViewById<EditText>(R.id.auth).text.toString(),
                 DeploymentId = null,OrganizationId = null,TennathId = null,Queue = null,MyPhone = null
             )
-
+        //save settings for later usage
+        preferences.edit {
+            putString("url",findViewById<EditText>(R.id.url).text.toString())
+            putString("service",findViewById<EditText>(R.id.service).text.toString())
+            putString("agenturl",findViewById<EditText>(R.id.agenturl).text.toString())
+            putString("fname",findViewById<EditText>(R.id.fname).text.toString())
+            putString("lname",findViewById<EditText>(R.id.lname).text.toString())
+            putString("subject",findViewById<EditText>(R.id.subject).text.toString())
+            putString("mail",findViewById<EditText>(R.id.mail).text.toString())
+            putString("auth",findViewById<EditText>(R.id.auth).text.toString())
+            apply()
+        }
     }
 
     val listener = object : VideoEngager.EventListener(){
