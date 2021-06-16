@@ -63,7 +63,7 @@ class GE_Activity : AppCompatActivity() {
        // Globals.params?.genesys_cloud_params_init?.let {
             sett = Settings(
                 VideoengagerUrl =  "https://videome.leadsecure.com",
-                Environment = findViewById<EditText>(R.id.url).text.toString()+"/"+findViewById<EditText>(R.id.service).text.toString(),
+                Environment = findViewById<EditText>(R.id.url).text.toString(),
                 AgentShortURL = findViewById<EditText>(R.id.agenturl).text.toString(),
                 MyFirstName = findViewById<EditText>(R.id.fname).text.toString(),
                 MyLastName = findViewById<EditText>(R.id.lname).text.toString(),
@@ -71,7 +71,8 @@ class GE_Activity : AppCompatActivity() {
                 MyEmail =  findViewById<EditText>(R.id.mail).text.toString(),
                 Language = MainActivity.Lang?: VideoEngager.Language.ENGLISH,
                 AuthorizationHeader = findViewById<EditText>(R.id.auth).text.toString(),
-                DeploymentId = null,OrganizationId = null,TennathId = null,Queue = null,MyPhone = null
+                DeploymentId = null,OrganizationId = null,TennathId = null,Queue = null,MyPhone = null,
+                ServiceName = findViewById<EditText>(R.id.service).text.toString()
             )
         //save settings for later usage
         preferences.edit {
@@ -97,9 +98,7 @@ class GE_Activity : AppCompatActivity() {
         }
 
         override fun onMessageReceived(message: String) {
-            runOnUiThread {
-                Toast.makeText(this@GE_Activity, message.trim(), Toast.LENGTH_LONG).show()
-            }
+            Toast.makeText(this@GE_Activity, message.trim(), Toast.LENGTH_LONG).show()
         }
     }
 
