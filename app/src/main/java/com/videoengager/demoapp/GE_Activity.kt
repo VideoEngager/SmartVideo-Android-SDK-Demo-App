@@ -72,7 +72,8 @@ class GE_Activity : AppCompatActivity() {
                 Language = MainActivity.Lang?: VideoEngager.Language.ENGLISH,
                 AuthorizationHeader = findViewById<EditText>(R.id.auth).text.toString(),
                 DeploymentId = null,OrganizationId = null,TennathId = null,Queue = null,MyPhone = null,
-                ServiceName = findViewById<EditText>(R.id.service).text.toString()
+                ServiceName = findViewById<EditText>(R.id.service).text.toString(),
+                Subject = findViewById<EditText>(R.id.subject).text.toString()
             )
         //save settings for later usage
         preferences.edit {
