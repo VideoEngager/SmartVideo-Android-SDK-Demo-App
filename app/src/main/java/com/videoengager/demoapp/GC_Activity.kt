@@ -8,11 +8,13 @@ package com.videoengager.demoapp
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
@@ -20,20 +22,34 @@ import java.util.*
 
 class GC_Activity : AppCompatActivity() {
     lateinit var sett:Settings
+    lateinit var preferences : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_c)
-        Globals.params?.genesys_cloud_params_init?.let {
-            findViewById<EditText>(R.id.orgid).setText(it.OrganizationId)
-            findViewById<EditText>(R.id.depid).setText(it.DeploymentId)
-            findViewById<EditText>(R.id.videourl).setText(it.VideoengagerUrl)
-            findViewById<EditText>(R.id.tenid).setText(it.TennathId)
-            findViewById<EditText>(R.id.env).setText(it.Environment)
-            findViewById<EditText>(R.id.queue).setText(it.Queue)
-            findViewById<EditText>(R.id.name).setText(it.MyNickname)
+        preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
+       if(!preferences.contains("VideoengagerUrl")) {//load defaults from params.json
+           Globals.params?.genesys_cloud_params_init?.let {
+               findViewById<EditText>(R.id.orgid).setText(it.OrganizationId)
+               findViewById<EditText>(R.id.depid).setText(it.DeploymentId)
+               findViewById<EditText>(R.id.videourl).setText(it.VideoengagerUrl)
+               findViewById<EditText>(R.id.tenid).setText(it.TennathId)
+               findViewById<EditText>(R.id.env).setText(it.Environment)
+               findViewById<EditText>(R.id.queue).setText(it.Queue)
+               findViewById<EditText>(R.id.name).setText(it.MyNickname)
+           }
+       }else
+       {
+           //load modified
+           findViewById<EditText>(R.id.orgid).setText(preferences.getString("OrganizationId",""))
+           findViewById<EditText>(R.id.depid).setText(preferences.getString("DeploymentId",""))
+           findViewById<EditText>(R.id.videourl).setText(preferences.getString("VideoengagerUrl",""))
+           findViewById<EditText>(R.id.tenid).setText(preferences.getString("TennathId",""))
+           findViewById<EditText>(R.id.env).setText(preferences.getString("Environment",""))
+           findViewById<EditText>(R.id.queue).setText(preferences.getString("Queue",""))
+           findViewById<EditText>(R.id.name).setText(preferences.getString("MyNickname",""))
 
-        }
+       }
 
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
@@ -92,6 +108,17 @@ class GC_Activity : AppCompatActivity() {
                 "myMail@aa.aa", "",
                 Language = MainActivity.Lang?: VideoEngager.Language.ENGLISH
             )
+            //save settings for later usage
+            preferences.edit {
+                putString("OrganizationId",findViewById<EditText>(R.id.orgid).text.toString())
+                putString("DeploymentId",findViewById<EditText>(R.id.depid).text.toString())
+                putString("VideoengagerUrl",findViewById<EditText>(R.id.videourl).text.toString())
+                putString("TennathId",findViewById<EditText>(R.id.tenid).text.toString())
+                putString("Environment",findViewById<EditText>(R.id.env).text.toString())
+                putString("Queue",findViewById<EditText>(R.id.queue).text.toString())
+                putString("MyNickname",findViewById<EditText>(R.id.name).text.toString())
+                apply()
+            }
         }
     }
 
