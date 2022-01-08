@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="2021 VideoEngager Inc."
+        android:text="2022 VideoEngager Inc."
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
