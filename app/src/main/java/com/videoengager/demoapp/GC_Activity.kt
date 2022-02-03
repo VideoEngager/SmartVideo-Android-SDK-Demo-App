@@ -62,6 +62,18 @@ class GC_Activity : AppCompatActivity() {
 
         findViewById<Button>(R.id.buttonvideo).setOnClickListener {
             readSettings()
+            // add custom fields
+            val customFields = mutableMapOf<String,Any>()
+            val urlClient = "https://my_url_client"
+            val videocall_flag = true
+            val audioonlycall_flag = false
+            val chatonly_flag  = false
+            customFields["urlclient"]=urlClient
+            customFields["videocall"]=videocall_flag
+            customFields["audioonlycall"]=audioonlycall_flag
+            customFields["chatonly"]=chatonly_flag
+            sett.CustomFields=customFields
+
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.video)) {
                 video.onEventListener = listener
