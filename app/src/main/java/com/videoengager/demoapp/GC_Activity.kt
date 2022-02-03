@@ -73,6 +73,7 @@ class GC_Activity : AppCompatActivity() {
             customFields["audioonlycall"]=audioonlycall_flag
             customFields["chatonly"]=chatonly_flag
             sett.CustomFields=customFields
+            sett.AvatarImageUrl="https://mir-s3-cdn-cf.behance.net/project_modules/disp/96be2232163929.567197ac6fb64.png"
 
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.video)) {
