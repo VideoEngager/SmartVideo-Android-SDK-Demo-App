@@ -54,6 +54,7 @@ class GC_Activity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
             readSettings()
+            sett.allowVisitorToSwitchAudioCallToVideoCall=false
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.audio)) {
                 video.onEventListener = listener
