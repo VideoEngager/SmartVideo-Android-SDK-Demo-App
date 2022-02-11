@@ -55,6 +55,10 @@ class GC_Activity : AppCompatActivity() {
             // audio mode only
             readSettings()
             sett.allowVisitorToSwitchAudioCallToVideoCall=false
+            sett.AvatarImageUrl="https://mir-s3-cdn-cf.behance.net/project_modules/disp/96be2232163929.567197ac6fb64.png"
+            sett.informationLabelText= "Your security code is : <b>1234</b>"
+            //sett.backgroundImageURL = "#FF1198"
+            sett.backgroundImageURL="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.audio)) {
                 video.onEventListener = listener
