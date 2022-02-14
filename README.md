@@ -36,7 +36,7 @@ Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
     ....
-    implementation 'com.videoengager:smartvideo-sdk:1.8.1'
+    implementation 'com.videoengager:smartvideo-sdk:1.8.2'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").

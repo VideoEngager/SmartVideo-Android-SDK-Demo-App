@@ -59,6 +59,7 @@ class GC_Activity : AppCompatActivity() {
             sett.informationLabelText= "Your security code is : <b>1234</b>"
             //sett.backgroundImageURL = "#FF1198"
             sett.backgroundImageURL="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+            sett.outgoingCallVC=Settings.OutgoingCallVC(hideAvatar = true,hideName = true)
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.audio)) {
                 video.onEventListener = listener
@@ -79,7 +80,7 @@ class GC_Activity : AppCompatActivity() {
             customFields["chatonly"]=chatonly_flag
             sett.CustomFields=customFields
             sett.AvatarImageUrl="https://mir-s3-cdn-cf.behance.net/project_modules/disp/96be2232163929.567197ac6fb64.png"
-
+            sett.outgoingCallVC=Settings.OutgoingCallVC(hideAvatar = false,hideName = false)
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.video)) {
                 video.onEventListener = listener
