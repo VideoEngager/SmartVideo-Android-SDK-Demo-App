@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DemoApp</string>
+    <string name="app_name">Sterling Demo App</string>
     <string name="app_version">Versión</string>
     <string name="staging_server">Staging Servidor</string>
     <string name="prod_server">Prod Servidor</string>

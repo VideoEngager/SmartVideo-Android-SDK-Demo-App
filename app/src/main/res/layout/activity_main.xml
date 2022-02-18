@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sterlink"
+        tools:srcCompat="@drawable/sterlink" />
+
     <TextView
         android:id="@+id/versionView"
         android:layout_width="wrap_content"
@@ -17,53 +30,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
-        android:id="@+id/button_gc"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
+    <Button
+        android:id="@+id/button_click_to_audio"
+        style="@style/Theme.RoundButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackground"
-        android:padding="16dp"
+        android:layout_marginTop="76dp"
+        android:backgroundTint="#D82226"
+        android:padding="@null"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/button_ge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:text="ClickToAudio"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_ve"
-        app:srcCompat="@drawable/genesys_cloud" />
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
-    <ImageButton
-        android:id="@+id/button_ge"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="16dp"
+    <Button
+        android:id="@+id/button_click_to_video"
+        style="@style/Theme.RoundButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackground"
-        android:padding="16dp"
+        android:backgroundTint="#D82226"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="ClickToVideo"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_gc"
-        app:srcCompat="@drawable/genesys_engage" />
-
-    <ImageButton
-        android:id="@+id/button_ve"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="?attr/selectableItemBackground"
-        android:padding="16dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/button_gc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/vengager" />
+        app:layout_constraintTop_toTopOf="@+id/button_click_to_audio" />
 
     <TextView
         android:id="@+id/textView"

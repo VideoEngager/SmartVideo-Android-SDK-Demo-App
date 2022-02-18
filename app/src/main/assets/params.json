@@ -1,19 +1,15 @@
 {
 "genesys_cloud_params_init":{
-   "AgentShortURL":"mobiledev",
-   "DeploymentId":"973f8326-c601-40c6-82ce-b87e6dafef1c",
-   "Environment":"https://api.mypurecloud.com",
-   "CustomerName":"Mobile Demo Tester",
-   "OrganizationId":"c4b553c3-ee42-4846-aeb1-f0da3d85058e",
-   "Queue":"MobileDev",
-   "TennathId":"hbvvUTaZxCVLikpB",
-   "VideoengagerUrl":"https://videome.videoengager.com"
+  "AgentShortURL":"mobiledev",
+  "DeploymentId":"08ea0f49-c410-4d96-911e-13e0de2de4f2",
+  "Environment":"https://api.mypurecloud.ie",
+  "CustomerName":"Sterling Demo Tester",
+  "OrganizationId":"41ab6cbd-36ad-409a-9d37-971e6570990c",
+  "Queue":"Video Banking",
+  "TennathId":"dzGwZFRssP0ANhKl",
+  "VideoengagerUrl":"https://videome.videoengager.com"
 },
-"generic_params_init":{   
-   "AgentShortURL":"pureclouddemo",
-   "CustomerName":"Mobile Demo Tester",
-   "VideoengagerUrl":"https://videome.videoengager.com"
-   },
+"generic_params_init":{},
 "genesys_engage_params_init":{},
 "supported_languages":{
 	"ENGLISH":"en_US",    
