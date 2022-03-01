@@ -100,7 +100,7 @@ class GC_Activity : AppCompatActivity() {
                             finish()
                         }
 
-                        override fun onDisconnected() {
+                        override fun onCallFinished() {
                             finish()
                         }
                     }
@@ -144,7 +144,7 @@ class GC_Activity : AppCompatActivity() {
     }
 
     val listener = object : VideoEngager.EventListener(){
-        override fun onDisconnected() {
+        override fun onCallFinished() {
             finish()
         }
 

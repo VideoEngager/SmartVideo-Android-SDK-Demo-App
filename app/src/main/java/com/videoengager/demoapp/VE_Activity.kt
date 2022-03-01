@@ -50,7 +50,7 @@ class VE_Activity : AppCompatActivity() {
     }
 
     val listener = object : VideoEngager.EventListener(){
-        override fun onDisconnected() {
+        override fun onCallFinished() {
             finish()
         }
 
