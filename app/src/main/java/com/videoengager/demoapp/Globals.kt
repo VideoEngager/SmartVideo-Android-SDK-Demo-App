@@ -11,5 +11,6 @@ class Globals {
     companion object {
         var chat:VideoEngager?=null
         var params:Params?=null
+        var agentName=""
     }
 }

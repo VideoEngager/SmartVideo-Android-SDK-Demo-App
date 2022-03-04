@@ -37,7 +37,7 @@ class WebChat : AppCompatActivity() {
             }
 
             override fun onMessageReceived(message: String) {
-                chatBox.append("${Globals.chat?.settings?.AgentShortURL}->${message}\n")
+                chatBox.append("${Globals.agentName}->${message}\n")
                 scrollView.post {
                     scrollView.fullScroll(View.FOCUS_DOWN)
                 }

@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.model.AgentInfo
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
 import java.util.*
@@ -98,6 +99,12 @@ class GC_Activity : AppCompatActivity() {
                             val intent = Intent(this@GC_Activity, WebChat::class.java)
                             startActivity(intent)
                             finish()
+                        }
+
+                        override fun onAgentOnline(agentInfo: AgentInfo?) {
+                            agentInfo?.let {
+                                Globals.agentName=it.firstName?:"Agent"
+                            }
                         }
 
                         override fun onCallFinished() {
