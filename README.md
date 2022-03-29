@@ -36,7 +36,7 @@ Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
     ....
-    implementation 'com.videoengager:smartvideo-sdk:1.9.7'
+    implementation 'com.videoengager:smartvideo-sdk:1.10.0'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").
@@ -44,7 +44,7 @@ dependencies {
 
 These permissions should be added to the application's `AndroidManifext.xml` file:
 
-```
+```XML
 <uses-permission android:name="android.permission.INTERNET" />  
 <uses-permission android:name="android.permission.CAMERA" />  
 <uses-permission android:name="android.permission.RECORD_AUDIO" />  
@@ -67,8 +67,8 @@ These permissions should be added to the application's `AndroidManifext.xml` fil
 The demo app comes with pre-configured Genesys Cloud account, within the Video Engager organization. To quickly test the demo app, one needs to:
 * visit Genesys Cloud [https://login.mypurecloud.com/](https://login.mypurecloud.com/)
 * login as agent, by using the following credentials
-    * username: mobiledev@videoengager.com
-    * password: [ask Video Engager support team to obtain your password](mailto:support@videoengager.com)
+  * username: mobiledev@videoengager.com
+  * password: [ask Video Engager support team to obtain your password](mailto:support@videoengager.com)
 * clone and compile this project without any change of parameters in `assets/params.json`
 * run the compiled project in his/her Android Phone
 * select `Genesys Cloud` and tap on `Start Video` or `Start Audio` button.
@@ -193,11 +193,119 @@ findViewById<Button>(R.id.button_video).setOnClickListener {
 
 ```
 
+### Additional settings
+SDK customizations are available with some additional parameters in ```Settings.class```:
+```Kotlin
+//Map of KeyValues sent as headers with start of interaction 
+var CustomFields : Map<String,Any>
 
+//Image URL that will be displayed to Agent 
+var AvatarImageUrl : String?
 
+//Allows user to switch from Audio Call to Video Call in audio only scenario
+var allowVisitorToSwitchAudioCallToVideoCall : Boolean
+
+//Additional Label shown at the top of CallScreen (supports base HTML tags)
+var informationLabelText:String?
+
+//Image URL that will be displayed as background in Call Screen (supports hex color strings as #AABBCC)
+var backgroundImageURL:String?
+
+//Class to control RingingScreen UI
+var outgoingCallVC:OutgoingCallVC? {
+      //Show/Hide Agent avatar image
+      var hideAvatar:Boolean?=false,
+      //Show/Hide Agent name
+      var hideName:Boolean?=false 
+    }
+    
+//Controls direct "minimized" start of CallScreen    
+var startCallWithPictureInPictureMode:Boolean?
+
+//Controls direct start with SpeakerPhone in CallScreen
+var startCallWithSpeakerPhone:Boolean?=false,
+
+//CallScreen Toolbars visibility mode 
+// Possible values :
+//-1 ->  toolbar is always shown and never hidden
+// 0 ->  toolbar opens when the user tap and hides when the user tap again. No timeouts
+// 1 and up -> toolbar opens when the user tap and hides when the user tap again. Hide timeout (in seconds) is value
+var toolBarHideTimeout:Int=10
+
+//Label that will be displayed when we don't have information about Agent.
+var customerLabel:String?=null,
+
+// Wait time (in seconds) for Agent pickup.
+var agentWaitingTimeout:Int=120
+
+```
+
+### Listen for events with `VideoEngager.EventListener`
+```kotlin
+val listener = object : VideoEngager.EventListener(){  
+        override fun onChatAccepted(){
+            //fires when agetn accept chat interaction  
+        }
+        
+        override fun onMessageReceived(message:String){
+            //fires when agent send chat message
+        }
+        
+        override fun onMessageAndTimeStampReceived(timestamp: String,message:String){
+            //same as "onMessageReceived" but with timestamp of message
+        }
+        
+        override fun onAgentOnline(agentInfo:AgentInfo?){
+             //fires if agent is online
+        }
+        
+        override fun onAgentUnavailable(){
+             //fires when agent go offline or is unavaiable  
+        }
+        
+        override fun onPeerConnectionLost(){
+           //fires when Connection from agent was lost  
+        }
+        
+        override fun onIsConnectedToInternet(isConnected:Boolean){
+            //fires when Internet Connection is changed
+        }
+        
+        override fun onErrorMessage(type:String,message:String){
+            //fires on every error message thrown from SDK modules
+        }
+        
+        override fun onCallWaiting(callInfo:CallInfo){
+            //fires when SDK starts Ringing
+        }
+        
+        override fun onCallStarted(){
+            //fires when Call is started
+        }
+        
+        override fun onCallOnHold(){
+            //fires when Call state is changed to onHold
+        }
+        
+        override fun onCallResume(){
+            //fires when Call state is resumed
+        }
+        
+        override fun onCallFinished(){
+             //fires when Call state is ended or disconnected
+        }
+        
+        override fun onAgentTimeout():Boolean {
+         //Fires when Agent didn't pickup call for Settings.agentWaitingTimeout seconds
+         //If return true integrated AgentBusy Dialog will be shown otherwise No and Disconnect will be executed internally
+        return true
+        }
+
+}
+```
 
 ### Error Handling
-This step requires to prepare your app for error handling. 
+This step requires to prepare your app for error handling.
 
 
 Run time errors cover the usage of the SDK within the host app. When the host app starts a video or audio call, the SDK will initiate a series of REST calls and socket exchange, between the SDK, Genesys Cloud and SmartVideo data centres. If any error happens before the call is established, the SDK won't provide any UI for error handling and will only return error message through an optional  method, named `onErrorMessage(type:String,message:String)`. An error at this stage can be triggered, if wrong parameters are provided in `assets/params.json`. Host app developers shall be responsible for handling errors at this stage. This demo app provides a simplified error handling, which can be reviewed by going to file `GC_Activity.kt` and looking in the VideoEngager.EventListener method ` override fun onErrorMessage(type: String, message: String)`
@@ -215,7 +323,7 @@ Another example of error handling inside the SDK, are when agent's internet conn
 
 ## How to contact us
 
-If you have any questions, please contact our [support team](mailto:support@videoengager.com), and we will be happy to help. 
+If you have any questions, please contact our [support team](mailto:support@videoengager.com), and we will be happy to help.
 
 
 ## Demo app download link

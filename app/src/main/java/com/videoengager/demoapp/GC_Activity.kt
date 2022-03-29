@@ -24,11 +24,13 @@ import java.util.*
 class GC_Activity : AppCompatActivity() {
     lateinit var sett:Settings
     lateinit var preferences : SharedPreferences
+    lateinit var additionalSettings : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_c)
         preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
+        additionalSettings = getSharedPreferences("additional", MODE_PRIVATE)
        if(!preferences.contains("VideoengagerUrl")) {//load defaults from params.json
            Globals.params?.genesys_cloud_params_init?.let {
                findViewById<EditText>(R.id.orgid).setText(it.OrganizationId)
@@ -55,13 +57,6 @@ class GC_Activity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
             readSettings()
-            sett.allowVisitorToSwitchAudioCallToVideoCall=false
-            sett.AvatarImageUrl="https://mir-s3-cdn-cf.behance.net/project_modules/disp/96be2232163929.567197ac6fb64.png"
-            sett.informationLabelText= "Your security code is : <b>1234</b>"
-            //sett.backgroundImageURL = "#FF1198"
-            sett.backgroundImageURL="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-            sett.outgoingCallVC=Settings.OutgoingCallVC(hideAvatar = true,hideName = true)
-            sett.startCallWithPictureInPictureMode=true
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.audio)) {
                 video.onEventListener = listener
@@ -81,9 +76,6 @@ class GC_Activity : AppCompatActivity() {
             customFields["audioonlycall"]=audioonlycall_flag
             customFields["chatonly"]=chatonly_flag
             sett.CustomFields=customFields
-            sett.AvatarImageUrl="https://mir-s3-cdn-cf.behance.net/project_modules/disp/96be2232163929.567197ac6fb64.png"
-            sett.outgoingCallVC=Settings.OutgoingCallVC(hideAvatar = false,hideName = false)
-            sett.startCallWithSpeakerPhone=true
             val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
             if (video.Connect(VideoEngager.CallType.video)) {
                 video.onEventListener = listener
@@ -119,6 +111,10 @@ class GC_Activity : AppCompatActivity() {
 
             }
         }
+
+        findViewById<Button>(R.id.buttonAdditionalSettings).setOnClickListener {
+            startActivity(Intent(this@GC_Activity,AdditionalSettingsActivity::class.java))
+        }
     }
 
     fun readSettings(){
@@ -147,6 +143,17 @@ class GC_Activity : AppCompatActivity() {
                 putString("MyNickname",findViewById<EditText>(R.id.name).text.toString())
                 apply()
             }
+            //load additional settings
+            sett.AvatarImageUrl = additionalSettings.getString("avatarImageUrl",null)
+            sett.informationLabelText = additionalSettings.getString("informationLabelText",null)
+            sett.backgroundImageURL = additionalSettings.getString("backgroundImageURL",null)
+            sett.toolBarHideTimeout = additionalSettings.getString("toolBarHideTimeout","10")!!.toInt()
+            sett.customerLabel = additionalSettings.getString("customerLabel",null)
+            sett.agentWaitingTimeout = additionalSettings.getString("agentWaitingTimeout","120")!!.toInt()
+            sett.allowVisitorToSwitchAudioCallToVideoCall = additionalSettings.getBoolean("allowVisitorToSwitchAudioCallToVideoCall",false)
+            sett.startCallWithPictureInPictureMode = additionalSettings.getBoolean("startCallWithPictureInPictureMode",false)
+            sett.startCallWithSpeakerPhone = additionalSettings.getBoolean("startCallWithSpeakerPhone",false)
+            sett.outgoingCallVC = Settings.OutgoingCallVC(additionalSettings.getBoolean("hideAvatar",false), additionalSettings.getBoolean("hideName",false))
         }
     }
 
@@ -157,6 +164,13 @@ class GC_Activity : AppCompatActivity() {
 
         override fun onErrorMessage(type: String, message: String) {
             Toast.makeText(this@GC_Activity, "Error:$message", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onAgentTimeout(): Boolean {
+            additionalSettings?.let {
+                return it.getBoolean("showAgentBusyDialog",true)
+            }
+            return super.onAgentTimeout()
         }
     }
 

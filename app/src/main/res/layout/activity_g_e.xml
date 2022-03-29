@@ -152,6 +152,19 @@
             app:layout_constraintTop_toBottomOf="@+id/service" />
 
         <Button
+            android:id="@+id/buttonAdditionalSettings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/additional_settings_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subject" />
+
+        <Button
             android:id="@+id/buttonaudio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -163,7 +176,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subject" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalSettings" />
 
         <Button
             android:id="@+id/buttonvideo"

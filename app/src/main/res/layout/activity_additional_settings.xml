@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdditionalSettingsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:text="Avatar Image Url"/>
+            <EditText
+                android:id="@+id/avatarImageUrl"
+                android:hint="Avatar Image Url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="textUri"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:text="Information Label Text"/>
+            <EditText
+                android:id="@+id/informationLabelText"
+                android:hint="Information Label Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:text="Background Image URL"/>
+            <EditText
+                android:id="@+id/backgroundImageURL"
+                android:hint="Background Image URL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="textUri"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:text="ToolBar Hide Timeout"/>
+            <EditText
+                android:id="@+id/toolBarHideTimeout"
+                android:hint="ToolBar Hide Timeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="numberSigned"
+                android:padding="10dp"
+                android:text="10"
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:text="Customer Label Text"/>
+            <EditText
+                android:id="@+id/customerLabel"
+                android:hint="Customer Label Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:text="Agent Waiting Timeout Seconds"/>
+            <EditText
+                android:id="@+id/agentWaitingTimeout"
+                android:hint="Agent Waiting Timeout Seconds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="numberSigned"
+                android:padding="10dp"
+                android:text="120"
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <CheckBox
+                android:id="@+id/showAgentBusyDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="showAgentBusyDialog on AgentWaitingTimeout" />
+
+            <CheckBox
+                android:id="@+id/allowVisitorToSwitchAudioCallToVideoCall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="allowVisitorToSwitchAudioCallToVideoCall " />
+
+            <CheckBox
+                android:id="@+id/startCallWithPictureInPictureMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="startCallWithPictureInPictureMode" />
+
+            <CheckBox
+                android:id="@+id/startCallWithSpeakerPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="startCallWithSpeakerPhone" />
+
+            <CheckBox
+                android:id="@+id/hideAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OutgoingCallVC / hideAvatar" />
+
+            <CheckBox
+                android:id="@+id/hideName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OutgoingCallVC / hideName" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

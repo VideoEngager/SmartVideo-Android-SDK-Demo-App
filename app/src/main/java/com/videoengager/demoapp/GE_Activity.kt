@@ -7,6 +7,7 @@ package com.videoengager.demoapp
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,12 +23,13 @@ import java.util.*
 class GE_Activity : AppCompatActivity() {
     lateinit var sett:Settings
     lateinit var preferences : SharedPreferences
+    lateinit var additionalSettings : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_e)
         preferences = getSharedPreferences("genesys_engage", MODE_PRIVATE)
-
+        additionalSettings = getSharedPreferences("additional", MODE_PRIVATE)
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
             readSettings()
@@ -55,7 +57,9 @@ class GE_Activity : AppCompatActivity() {
         findViewById<EditText>(R.id.mail).setText(preferences.getString("mail",""))
         findViewById<EditText>(R.id.auth).setText(preferences.getString("auth",""))
 
-
+        findViewById<Button>(R.id.buttonAdditionalSettings).setOnClickListener {
+            startActivity(Intent(this@GE_Activity,AdditionalSettingsActivity::class.java))
+        }
 
     }
 
@@ -87,6 +91,18 @@ class GE_Activity : AppCompatActivity() {
             putString("auth",findViewById<EditText>(R.id.auth).text.toString())
             apply()
         }
+
+        //load additional settings
+        sett.AvatarImageUrl = additionalSettings.getString("avatarImageUrl",null)
+        sett.informationLabelText = additionalSettings.getString("informationLabelText",null)
+        sett.backgroundImageURL = additionalSettings.getString("backgroundImageURL",null)
+        sett.toolBarHideTimeout = additionalSettings.getString("toolBarHideTimeout","10")!!.toInt()
+        sett.customerLabel = additionalSettings.getString("customerLabel",null)
+        sett.agentWaitingTimeout = additionalSettings.getString("agentWaitingTimeout","120")!!.toInt()
+        sett.allowVisitorToSwitchAudioCallToVideoCall = additionalSettings.getBoolean("allowVisitorToSwitchAudioCallToVideoCall",false)
+        sett.startCallWithPictureInPictureMode = additionalSettings.getBoolean("startCallWithPictureInPictureMode",false)
+        sett.startCallWithSpeakerPhone = additionalSettings.getBoolean("startCallWithSpeakerPhone",false)
+        sett.outgoingCallVC = Settings.OutgoingCallVC(additionalSettings.getBoolean("hideAvatar",false), additionalSettings.getBoolean("hideName",false))
     }
 
     val listener = object : VideoEngager.EventListener(){
@@ -100,6 +116,13 @@ class GE_Activity : AppCompatActivity() {
 
         override fun onMessageReceived(message: String) {
             Toast.makeText(this@GE_Activity, message.trim(), Toast.LENGTH_LONG).show()
+        }
+
+        override fun onAgentTimeout(): Boolean {
+            additionalSettings?.let {
+                return it.getBoolean("showAgentBusyDialog",true)
+            }
+            return super.onAgentTimeout()
         }
     }
 
