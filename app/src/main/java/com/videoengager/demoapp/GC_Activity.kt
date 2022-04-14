@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.model.AgentInfo
+import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
 import java.util.*
@@ -162,8 +163,9 @@ class GC_Activity : AppCompatActivity() {
             finish()
         }
 
-        override fun onErrorMessage(type: String, message: String) {
-            Toast.makeText(this@GC_Activity, "Error:$message", Toast.LENGTH_SHORT).show()
+        override fun onError(error: Error): Boolean {
+            if(error.severity==Error.Severity.FATAL) Toast.makeText(this@GC_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            return super.onError(error)
         }
 
         override fun onAgentTimeout(): Boolean {

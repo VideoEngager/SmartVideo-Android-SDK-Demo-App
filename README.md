@@ -36,7 +36,7 @@ Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
     ....
-    implementation 'com.videoengager:smartvideo-sdk:1.11.0'
+    implementation 'com.videoengager:smartvideo-sdk:1.12.0'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").
@@ -271,8 +271,11 @@ val listener = object : VideoEngager.EventListener(){
             //fires when Internet Connection is changed
         }
         
-        override fun onErrorMessage(type:String,message:String){
+        override fun onError(error:Error):Boolean{
             //fires on every error message thrown from SDK modules
+          // if error.hasInternalMessage==true you can prevent showing of internal message by return false , default is true (shows internal SDK message to user) 
+          // if error.severity==FATAL then SDK is stopped automatically otherwise SDK continues work. 
+          return super.onError(error)
         }
         
         override fun onCallWaiting(callInfo:CallInfo){
