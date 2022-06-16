@@ -6,6 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".VE_Activity">
 
+    <EditText
+        android:id="@+id/ve_url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/edit_text_bkgnd"
+        android:drawableStart="@drawable/url"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="textUri"
+        android:padding="10dp"
+        android:text=""
+        android:hint="Ve Visitor Url"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_audio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/button_audio"
         android:layout_width="0dp"

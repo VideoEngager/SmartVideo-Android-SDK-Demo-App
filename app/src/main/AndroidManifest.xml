@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.videoengager.demoapp">
-
+    <permission
+        android:name="android.permission.FLASHLIGHT"
+        tools:node="remove"
+        tools:selector="com.videoengager.sdk" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,11 +33,32 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter android:label="SmartVideo Call"
+                android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="https"
+                    android:host="*.videoengager.com"
+                    android:pathPrefix="/ve/" />
+                <data
+                    android:scheme="https"
+                    android:host="*.leadsecure.com"
+                    android:pathPrefix="/ve/" />
+            </intent-filter>
+            <intent-filter
+                android:label="Share to make video call">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

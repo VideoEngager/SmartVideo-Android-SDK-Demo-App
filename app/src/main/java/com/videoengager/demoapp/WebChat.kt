@@ -41,6 +41,9 @@ class WebChat : AppCompatActivity() {
                 scrollView.post {
                     scrollView.fullScroll(View.FOCUS_DOWN)
                 }
+                if(message.startsWith("https") && message.contains(".com/ve/")){
+                    Globals.chat?.VeVisitorVideoCall(message)
+                }
             }
 
 
