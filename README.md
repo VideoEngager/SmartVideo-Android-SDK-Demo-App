@@ -307,6 +307,66 @@ val listener = object : VideoEngager.EventListener(){
 }
 ```
 
+### DeepLink Handling
+This feature is used for "Escalation from WebChat/SMS/Email channel to video call" and "Schedule video call" scenarios.
+To implement this feature you must do these steps:
+* Add following to your ```AndroidManifest.xml``` for activity that plays with SmartVideo SDK:
+```xml
+        <activity
+            android:name=".<YOURSMARTVIDEO Activity>"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter android:label="SmartVideo Call"
+                android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="videome.videoengager.com"
+                    android:pathPrefix="/ve/" />
+                <data
+                    android:scheme="https"
+                    android:host="videome.leadsecure.com"
+                    android:pathPrefix="/ve/" />
+            </intent-filter>
+        </activity>
+```
+
+* Add following logic to corresponding activity to handle deep link requests :
+```kotlin
+   //handle deep links
+      if(intent.action== Intent.ACTION_VIEW && intent.data!=null){
+          val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
+          if(video.Connect(VideoEngager.CallType.video)) {
+              video.onEventListener = listener
+              video.VeVisitorVideoCall(intent.dataString?:"")
+          }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+      }
+```
+
+* Send to VideoEngager following information:
+```text
+      1.Your app PACKAGE NAME
+      2.Your app test and production SHA-256 keys fingerprint
+```
+This information will be added to our ```.well-known/assetlinks.json``` for verification
+
+You can read more about Android deep links here : https://developer.android.com/training/app-links/verify-site-associations#auto-verification
+
+### Short url call
+You can use this method of SDK to make you own implementation for Escalation or Schedule scenarios.
+If your users receives special VeVisitorVideoCall Url you can pass it in ```VeVisitorVideoCall(Url:String)``` and SDK will call asociated Agent.
+Example:
+```kotlin
+val veVisitorUrl="https://videome.leadsecure.com/ve/aBcDef"
+val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
+if(video.Connect(VideoEngager.CallType.video)) {
+    video.onEventListener = listener
+    video.VeVisitorVideoCall(veVisitorUrl)
+}else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+```
+
 ### Error Handling
 This step requires to prepare your app for error handling.
 

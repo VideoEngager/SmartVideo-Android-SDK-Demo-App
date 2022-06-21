@@ -41,15 +41,7 @@ class MainActivity : AppCompatActivity() {
         //load params.json from assets folder
         Globals.params=Gson().fromJson(assets.open("params.json").reader(Charsets.UTF_8),Params::class.java)
 
-        //handle deep links
-        if(intent.action==Intent.ACTION_VIEW && intent.data!=null){
-            val sett=Globals.params?.generic_params_init!!
-            sett.Language = MainActivity.Lang?:VideoEngager.Language.ENGLISH
-            val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-            if(video.Connect(VideoEngager.CallType.video)) {
-               video.VeVisitorVideoCall(intent.dataString?:"")
-            }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
-        }
+
     }
 
     override fun attachBaseContext(newBase: Context) {

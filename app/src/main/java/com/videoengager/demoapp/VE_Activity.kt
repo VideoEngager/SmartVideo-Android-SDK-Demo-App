@@ -7,6 +7,7 @@ package com.videoengager.demoapp
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -61,6 +62,15 @@ class VE_Activity : AppCompatActivity() {
 
         veVisitorUrl.addTextChangedListener {
             preferences.edit().putString("veUrl",veVisitorUrl.text.toString()).apply()
+        }
+
+        //handle deep links
+        if(intent.action== Intent.ACTION_VIEW && intent.data!=null){
+            val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
+            if(video.Connect(VideoEngager.CallType.video)) {
+                video.onEventListener = listener
+                video.VeVisitorVideoCall(intent.dataString?:"")
+            }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
         }
     }
 
