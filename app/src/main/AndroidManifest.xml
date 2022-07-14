@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.videoengager.demoapp">
+
     <permission
         android:name="android.permission.FLASHLIGHT"
         tools:node="remove"
         tools:selector="com.videoengager.sdk" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,31 +16,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartVideo">
         <activity
-            android:name=".AdditionalSettingsActivity"
-            android:screenOrientation="portrait"
+            android:name=".ScheduleResultActivity"
             android:exported="false" />
-        <activity android:name=".LangSelectorActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AdditionalSettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LangSelectorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GC_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".VE_Activity"
-            android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter android:label="SmartVideo Call"
-                android:autoVerify="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="SmartVideo Call">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="https"
-                    android:host="videome.videoengager.com"
-                    android:pathPrefix="/ve/" />
-                <data
-                    android:scheme="https"
-                    android:host="videome.leadsecure.com"
-                    android:pathPrefix="/ve/" />
+                <data android:scheme="https" />
+                <data android:host="videome.videoengager.com" />
+                <data android:host="videome.leadsecure.com" />
+                <data android:pathPrefix="/ve/" />
             </intent-filter>
         </activity>
         <activity

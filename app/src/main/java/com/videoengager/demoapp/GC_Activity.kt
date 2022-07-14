@@ -5,17 +5,21 @@
 //
 package com.videoengager.demoapp
 
-import android.content.Context
-import android.content.ContextWrapper
-import android.content.Intent
-import android.content.SharedPreferences
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.*
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.generic.model.schedule.Answer
+import com.videoengager.sdk.generic.model.schedule.Result
 import com.videoengager.sdk.model.AgentInfo
 import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.model.Settings
@@ -26,12 +30,24 @@ class GC_Activity : AppCompatActivity() {
     lateinit var sett:Settings
     lateinit var preferences : SharedPreferences
     lateinit var additionalSettings : SharedPreferences
+    lateinit var scheduleSettings : SharedPreferences
+    lateinit var waitView : AlertDialog
+    val SCHEDULE_MEETING = 9999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_c)
         preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
         additionalSettings = getSharedPreferences("additional", MODE_PRIVATE)
+        scheduleSettings = getSharedPreferences("schedule", MODE_PRIVATE)
+
+        waitView = AlertDialog.Builder(this)
+            .setTitle("Loading schedule meeting ...")
+            .setView(ProgressBar(this,null,android.R.attr.progressBarStyleLarge).apply {
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            })
+            .create()
+
        if(!preferences.contains("VideoengagerUrl")) {//load defaults from params.json
            Globals.params?.genesys_cloud_params_init?.let {
                findViewById<EditText>(R.id.orgid).setText(it.OrganizationId)
@@ -116,6 +132,88 @@ class GC_Activity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonAdditionalSettings).setOnClickListener {
             startActivity(Intent(this@GC_Activity,AdditionalSettingsActivity::class.java))
         }
+
+        findViewById<Button>(R.id.buttonschedule).setOnClickListener {
+            readSettings()
+            sett.MyPhone="+12345678"
+            AlertDialog.Builder(this@GC_Activity)
+                .setTitle(R.string.choose_time)
+                .setNegativeButton(R.string.set_time){ dlg,b->
+                    Calendar.getInstance().let { c->
+                        DatePickerDialog(this@GC_Activity, { datePicker, y, m, d ->
+                            TimePickerDialog(this@GC_Activity, { timePicker, hh, mm ->
+                                val pickedDateTime = Calendar.getInstance()
+                                pickedDateTime.set(y, m, d, hh, mm)
+                                VideoEngager.SDK_DEBUG=true
+                                val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+                                video.onEventListener = listener
+                                video.VeVisitorCreateScheduleMeeting(pickedDateTime.time,true, scheduleCallbackAnswer)
+                                waitView.setTitle("Loading schedule meeting ...")
+                                try{ waitView.show() }catch (e:Exception){}
+                            },c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE), true).show()
+                        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+                    }
+                }
+                .setNeutralButton(R.string.soon_as_possible){ dlg,b ->
+                    dlg.dismiss()
+                    VideoEngager.SDK_DEBUG=true
+                    val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+                    video.onEventListener = listener
+                    video.VeVisitorCreateScheduleMeeting(null,true, scheduleCallbackAnswer)
+                    waitView.setTitle("Loading schedule meeting ...")
+                   try{ waitView.show() }catch (e:Exception){}
+                }
+                .create()
+                .apply {
+                    if(scheduleSettings.contains("callid")){
+                        setButton(AlertDialog.BUTTON_POSITIVE,"Open last requested",object :DialogInterface.OnClickListener{
+                            override fun onClick(dlg: DialogInterface?, p1: Int) {
+                                dlg?.dismiss()
+                                VideoEngager.SDK_DEBUG=true
+                                val video = VideoEngager(this@GC_Activity, sett, VideoEngager.Engine.genesys)
+                                video.onEventListener = listener
+                                waitView.setTitle("Loading schedule meeting ...")
+                               try{ waitView.show() } catch (e:Exception){}
+                                scheduleSettings.getString("callid",null)?.let {
+                                    video.VeVisitorGetScheduleMeeting(it,scheduleCallbackAnswer)
+                                }
+                            }
+                        })
+                    }
+                }
+                .show()
+        }
+    }
+
+    val scheduleCallbackAnswer = object : Answer() {
+        override fun onSuccessResult(result: Result) {
+            runOnUiThread {
+                waitView.hide()
+                scheduleSettings.edit().putString("callid",result.callId).apply()
+            }
+            startActivityForResult(Intent(this@GC_Activity,ScheduleResultActivity::class.java).putExtra("schedule_info",result),SCHEDULE_MEETING)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == SCHEDULE_MEETING && resultCode==ScheduleResultActivity.DELETE_ACTION){
+            data?.getStringExtra("callId")?.let {
+                VideoEngager.SDK_DEBUG=true
+                val video = VideoEngager(this@GC_Activity, sett, VideoEngager.Engine.genesys)
+                waitView.setTitle("Deleting schedule meeting ...")
+                waitView.show()
+                video.VeVisitorDeleteScheduleMeeting(it,object : Answer(){
+                    override fun onSuccessResult(result: Result) {
+                        runOnUiThread {
+                            scheduleSettings.edit().remove("callid").apply()
+                            waitView.hide()
+                            Toast.makeText(this@GC_Activity,"Deleted",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
+            }
+        }
     }
 
     fun readSettings(){
@@ -129,7 +227,7 @@ class GC_Activity : AppCompatActivity() {
                 findViewById<EditText>(R.id.queue).text.toString(),
                 it.AgentShortURL,
                 findViewById<EditText>(R.id.name).text.toString(),
-                findViewById<EditText>(R.id.name).text.toString(), "",
+                findViewById<EditText>(R.id.name).text.toString(), ".",
                 "myMail@aa.aa", "",
                 Language = MainActivity.Lang?: VideoEngager.Language.ENGLISH
             )
@@ -164,6 +262,8 @@ class GC_Activity : AppCompatActivity() {
         }
 
         override fun onError(error: Error): Boolean {
+            runOnUiThread { waitView.hide() }
+            scheduleSettings.edit().remove("callid").apply()
             if(error.severity==Error.Severity.FATAL) Toast.makeText(this@GC_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
             return super.onError(error)
         }
@@ -182,4 +282,5 @@ class GC_Activity : AppCompatActivity() {
         )
         super.attachBaseContext(localeUpdatedContext)
     }
+
 }
