@@ -356,7 +356,7 @@ You can read more about Android deep links here : https://developer.android.com/
 
 ### Short url call
 You can use this method of SDK to make you own implementation for Escalation or Schedule scenarios.
-If your users receives special VeVisitorVideoCall Url you can pass it in ```VeVisitorVideoCall(Url:String)``` and SDK will call asociated Agent.
+If your users receives special VeVisitorVideoCall Url you can pass it in ```VeVisitorVideoCall(Url:String)``` and SDK will call associated Agent.
 Example:
 ```kotlin
 val veVisitorUrl="https://videome.leadsecure.com/ve/aBcDef"
@@ -366,6 +366,69 @@ if(video.Connect(VideoEngager.CallType.video)) {
     video.VeVisitorVideoCall(veVisitorUrl)
 }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
 ```
+
+### Schedule callback
+We provide several methods to request schedule meeting with Genesys Cloud Agent.
+You can see implementation in ``GC_Activity.kt`` class in ClickListener of `buttonschedule` element.
+Examples:
+
+* Create schedule meeting at specific date/time
+```kotlin
+val meetingDateTime = Calendar.getInstance()
+meetingDateTime.set(2022, 7, 15, 7, 0) //we request meeting at 15.07.2022 07:00
+val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+video.onEventListener = listener
+val scheduleCallbackAnswer = object : Answer() {
+  override fun onSuccessResult(result: Result) {
+   // here we can read information about meeting 
+  // please look at ScheduleResultActivity.kt for examples how to proceed with meeting result 
+  }
+}
+video.VeVisitorCreateScheduleMeeting(meetingDateTime.time,true, scheduleCallbackAnswer)
+```
+
+* Create schedule meeting as soon as possible
+```kotlin
+val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+video.onEventListener = listener
+val scheduleCallbackAnswer = object : Answer() {
+  override fun onSuccessResult(result: Result) {
+    // here we can read information about meeting 
+    // please look at ScheduleResultActivity.kt for examples how to proceed with meeting result 
+  }
+}
+video.VeVisitorCreateScheduleMeeting(null, true, scheduleCallbackAnswer)
+```
+
+* Read schedule meeting info
+  To verify status of meeting you must read information about it.For this operation you need `callId` from requested `Result`.
+```kotlin
+val callId = "abcfef-asdv-122sasdsd-fasfd"
+val video = VideoEngager(this@GC_Activity, sett, VideoEngager.Engine.genesys)
+video.onEventListener = listener
+val scheduleCallbackAnswer = object : Answer() {
+  override fun onSuccessResult(result: Result) {
+    // here we can read information about meeting 
+    // please look at ScheduleResultActivity.kt for examples how to proceed with meeting result 
+  }
+}
+video.VeVisitorGetScheduleMeeting(callId, scheduleCallbackAnswer)
+```
+
+* Delete schedule meeting info
+  For this operation you need `callId` from requested `Result`.
+```kotlin
+val callId = "abcfef-asdv-122sasdsd-fasfd"
+val video = VideoEngager(this@GC_Activity, sett, VideoEngager.Engine.genesys)
+video.onEventListener = listener
+val scheduleCallbackAnswer = object : Answer() {
+  override fun onSuccessResult(result: Result) {
+    // on success deletion we handle here with Result with null values
+  }
+}
+video.VeVisitorGetScheduleMeeting(callId, scheduleCallbackAnswer)
+```
+
 
 ### Error Handling
 This step requires to prepare your app for error handling.

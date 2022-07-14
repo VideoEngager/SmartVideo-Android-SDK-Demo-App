@@ -8,4 +8,16 @@
     <string name="version" translatable="false">Version 1.7</string>
     <string name="start_chat_button">Start Chat</string>
     <string name="additional_settings_button">Additional settings</string>
+    <string name="start_schedule_button">Request Schedule Meeting</string>
+    <string name="soon_as_possible">soon as possible</string>
+    <string name="choose_time">Select meeting time!</string>
+    <string name="set_time">Custom Date/Time</string>
+    <string name="open_meeting">Join video meeting</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="meeting_info">Meeting information</string>
+    <string name="meeting_url">VideoCall Url</string>
+    <string name="meeting_time">Meeting DateTime</string>
+    <string name="save_meeting_file">Save ics File</string>
+    <string name="copy">Copy meeting url</string>
+    <string name="delete">Delete meeting</string>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import com.google.gson.Gson
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.tools.LangUtils
 import java.util.*
@@ -29,7 +30,9 @@ class VE_Activity : AppCompatActivity() {
         preferences = getSharedPreferences("ve_preferences", MODE_PRIVATE)
         veVisitorUrl = findViewById(R.id.ve_url)
         veVisitorUrl.setText(preferences.getString("veUrl",""))
-
+        if(Globals.params==null){
+            Globals.params= Gson().fromJson(assets.open("params.json").reader(Charsets.UTF_8),Params::class.java)
+        }
         val sett=Globals.params?.generic_params_init!!
         sett.Language = MainActivity.Lang?:VideoEngager.Language.ENGLISH
 //        val sett = Settings(
