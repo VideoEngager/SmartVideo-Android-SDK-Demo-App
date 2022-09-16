@@ -47,13 +47,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //sdk imports release
-    implementation 'com.videoengager:smartvideo-sdk:1.14.0'
+   // implementation 'com.videoengager:smartvideo-sdk:1.14.0'
     //internal usage
-//    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\outputs\\aar\\smartvideo-sdk-debug.aar')
-//    implementation 'com.google.code.gson:gson:2.8.6'
-//    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
-//    implementation 'com.squareup.picasso:picasso:2.71828'
-//    implementation 'org.webrtc:google-webrtc:1.0.32006'
-//    implementation "com.shopgun.android:zoomlayout:2.0.0"
-//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\outputs\\aar\\smartvideo-sdk-debug.aar')
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'org.webrtc:google-webrtc:1.0.32006'
+    implementation "com.shopgun.android:zoomlayout:2.0.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
 }

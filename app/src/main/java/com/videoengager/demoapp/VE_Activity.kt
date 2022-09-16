@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.tools.LangUtils
 import java.util.*
 
@@ -82,8 +83,9 @@ class VE_Activity : AppCompatActivity() {
             finish()
         }
 
-        override fun onErrorMessage(type: String, message: String) {
-            Toast.makeText(this@VE_Activity, "Error:$message", Toast.LENGTH_SHORT).show()
+        override fun onError(error: Error): Boolean {
+            Toast.makeText(this@VE_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            return super.onError(error)
         }
     }
 
