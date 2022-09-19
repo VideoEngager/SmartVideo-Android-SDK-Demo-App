@@ -16,8 +16,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.edit
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
+import org.acra.ACRA
 import java.util.*
 
 class GE_Activity : AppCompatActivity() {
@@ -110,8 +112,10 @@ class GE_Activity : AppCompatActivity() {
             finish()
         }
 
-        override fun onErrorMessage(type: String, message: String) {
-            Toast.makeText(this@GE_Activity, "Error:$message", Toast.LENGTH_SHORT).show()
+        override fun onError(error: Error): Boolean {
+            ACRA?.log?.e("GE_Activity",error.toString())
+            Toast.makeText(this@GE_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            return super.onError(error)
         }
 
         override fun onMessageReceived(message: String) {
