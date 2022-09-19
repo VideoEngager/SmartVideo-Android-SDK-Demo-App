@@ -20,4 +20,5 @@
     <string name="save_meeting_file">Save ics File</string>
     <string name="copy">Copy meeting url</string>
     <string name="delete">Delete meeting</string>
+    <string name="sendlogs">Send logs</string>
 </resources>

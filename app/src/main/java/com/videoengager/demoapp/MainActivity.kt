@@ -5,17 +5,21 @@
 //
 package com.videoengager.demoapp
 
+import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.tools.LangUtils
+import org.acra.ACRA
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,14 +38,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,GE_Activity::class.java))
         }
 
-            if(Lang==null){
-                startActivity(Intent(this,LangSelectorActivity::class.java))
-                finish()
-            }
+        if(Lang==null){
+            startActivity(Intent(this,LangSelectorActivity::class.java))
+            finish()
+        }
         //load params.json from assets folder
         Globals.params=Gson().fromJson(assets.open("params.json").reader(Charsets.UTF_8),Params::class.java)
 
-
+       findViewById<Button>(R.id.button_logging).apply {
+           setOnClickListener {
+               val v = findViewById<TextView>(R.id.text)
+               v.setText("dummy error")
+           }
+           if(application.javaClass.simpleName!=ErrorReportingApplication::class.java.simpleName){
+               visibility = View.GONE
+           }
+       }
     }
 
     override fun attachBaseContext(newBase: Context) {

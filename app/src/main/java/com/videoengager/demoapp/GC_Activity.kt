@@ -9,10 +9,12 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.*
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +26,7 @@ import com.videoengager.sdk.model.AgentInfo
 import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
+import org.acra.ACRA
 import java.util.*
 
 class GC_Activity : AppCompatActivity() {
@@ -33,6 +36,7 @@ class GC_Activity : AppCompatActivity() {
     lateinit var scheduleSettings : SharedPreferences
     lateinit var waitView : AlertDialog
     val SCHEDULE_MEETING = 9999
+    var ddd : TextView ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -264,7 +268,10 @@ class GC_Activity : AppCompatActivity() {
         override fun onError(error: Error): Boolean {
             runOnUiThread { waitView.hide() }
             scheduleSettings.edit().remove("callid").apply()
-            if(error.severity==Error.Severity.FATAL) Toast.makeText(this@GC_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            if(error.severity==Error.Severity.FATAL){
+                ACRA?.log?.e("GC_Activity",error.toString())
+                Toast.makeText(this@GC_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            }
             return super.onError(error)
         }
 

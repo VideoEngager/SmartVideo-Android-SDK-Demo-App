@@ -17,7 +17,9 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.tools.LangUtils
+import org.acra.ACRA
 import java.util.*
 
 class VE_Activity : AppCompatActivity() {
@@ -82,9 +84,12 @@ class VE_Activity : AppCompatActivity() {
             finish()
         }
 
-        override fun onErrorMessage(type: String, message: String) {
-            Toast.makeText(this@VE_Activity, "Error:$message", Toast.LENGTH_SHORT).show()
+        override fun onError(error: Error): Boolean {
+            ACRA?.log?.e("VE_Activity",error.toString())
+            Toast.makeText(this@VE_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            return super.onError(error)
         }
+
     }
 
     override fun attachBaseContext(newBase: Context) {
