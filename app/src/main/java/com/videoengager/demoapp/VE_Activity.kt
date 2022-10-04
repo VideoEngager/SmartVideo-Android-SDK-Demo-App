@@ -89,7 +89,6 @@ class VE_Activity : AppCompatActivity() {
             Toast.makeText(this@VE_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
             return super.onError(error)
         }
-
     }
 
     override fun attachBaseContext(newBase: Context) {
