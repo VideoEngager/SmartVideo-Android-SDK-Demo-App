@@ -7,6 +7,13 @@
     tools:context=".WebChat"
     android:orientation="vertical">
 
+    <ImageButton
+        android:id="@+id/exit_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:scaleType="center"
+        android:src="?attr/homeAsUpIndicator" />
     <ScrollView
         android:id="@+id/msgScroll"
         android:layout_width="match_parent"

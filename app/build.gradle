@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    def acraVersion = '5.9.6'
+    def acraVersion = '5.9.7'
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
 
@@ -51,7 +51,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //sdk imports release
-    implementation 'com.videoengager:smartvideo-sdk:1.15.1'
+    implementation 'com.videoengager:smartvideo-sdk:1.15.5'
     //internal usage
 //    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\outputs\\aar\\smartvideo-sdk-debug.aar')
 //    implementation 'com.google.code.gson:gson:2.8.6'
