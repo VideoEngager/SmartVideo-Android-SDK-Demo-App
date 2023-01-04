@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.videoengager.sdk.VideoEngager
+import java.util.concurrent.Executors
 
 
 class WebChat : AppCompatActivity() {
@@ -48,10 +49,14 @@ class WebChat : AppCompatActivity() {
 
 
         }
+
+        findViewById<ImageButton>(R.id.exit_button).setOnClickListener { onBackPressed() }
     }
 
     override fun onBackPressed() {
-        Globals.chat?.Disconnect()
-        //super.onBackPressed()
+        Executors.newSingleThreadExecutor().execute {
+            Globals.chat?.Disconnect()
+        }
+        super.onBackPressed()
     }
 }

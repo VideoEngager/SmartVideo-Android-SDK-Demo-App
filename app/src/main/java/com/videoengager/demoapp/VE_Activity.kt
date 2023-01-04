@@ -48,14 +48,6 @@ class VE_Activity : AppCompatActivity() {
 //            "demo@demo.dd","123456",
 //            MainActivity.Lang!!
 //        )
-        findViewById<Button>(R.id.button_audio).setOnClickListener {
-
-            val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-            if(video.Connect(VideoEngager.CallType.audio)) {
-                video.onEventListener = listener
-                video.VeVisitorVideoCall(veVisitorUrl.text.toString())
-            }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
-        }
 
         findViewById<Button>(R.id.button_video).setOnClickListener {
             val video = VideoEngager(this,sett, VideoEngager.Engine.generic)

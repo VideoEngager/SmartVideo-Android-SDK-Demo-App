@@ -17,39 +17,31 @@
         android:drawableStart="@drawable/url"
         android:ems="10"
         android:gravity="center_horizontal"
+        android:hint="Ve Visitor Url"
         android:inputType="textUri"
         android:padding="10dp"
         android:text=""
-        android:hint="Ve Visitor Url"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_audio"
+        app:layout_constraintBottom_toTopOf="@+id/button_video"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_audio"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/start_audio_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_chainStyle="spread" />
+
 
     <Button
         android:id="@+id/button_video"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="24dp"
         android:text="@string/start_video_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_audio" />
+        app:layout_constraintTop_toBottomOf="@+id/ve_url" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -121,7 +121,7 @@ class GC_Activity : AppCompatActivity() {
                         }
 
                         override fun onCallFinished() {
-                            finish()
+                           // finish()
                         }
                     }
                 } else Toast.makeText(
@@ -152,6 +152,7 @@ class GC_Activity : AppCompatActivity() {
                                 val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
                                 video.onEventListener = listener
                                 video.VeVisitorCreateScheduleMeeting(pickedDateTime.time,true, scheduleCallbackAnswer)
+                                video.Disconnect()
                                 waitView.setTitle("Loading schedule meeting ...")
                                 try{ waitView.show() }catch (e:Exception){}
                             },c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE), true).show()
@@ -163,7 +164,8 @@ class GC_Activity : AppCompatActivity() {
                     VideoEngager.SDK_DEBUG=true
                     val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
                     video.onEventListener = listener
-                    video.VeVisitorCreateScheduleMeeting(null,true, scheduleCallbackAnswer)
+                    video.VeVisitorCreateScheduleMeeting(null,false, scheduleCallbackAnswer)
+                    video.Disconnect()
                     waitView.setTitle("Loading schedule meeting ...")
                    try{ waitView.show() }catch (e:Exception){}
                 }
@@ -177,9 +179,10 @@ class GC_Activity : AppCompatActivity() {
                                 val video = VideoEngager(this@GC_Activity, sett, VideoEngager.Engine.genesys)
                                 video.onEventListener = listener
                                 waitView.setTitle("Loading schedule meeting ...")
-                               try{ waitView.show() } catch (e:Exception){}
+                                try{ waitView.show() } catch (e:Exception){}
                                 scheduleSettings.getString("callid",null)?.let {
                                     video.VeVisitorGetScheduleMeeting(it,scheduleCallbackAnswer)
+                                    video.Disconnect()
                                 }
                             }
                         })
@@ -194,8 +197,8 @@ class GC_Activity : AppCompatActivity() {
             runOnUiThread {
                 waitView.hide()
                 scheduleSettings.edit().putString("callid",result.callId).apply()
+                startActivityForResult(Intent(this@GC_Activity,ScheduleResultActivity::class.java).putExtra("schedule_info",result),SCHEDULE_MEETING)
             }
-            startActivityForResult(Intent(this@GC_Activity,ScheduleResultActivity::class.java).putExtra("schedule_info",result),SCHEDULE_MEETING)
         }
     }
 
@@ -214,6 +217,7 @@ class GC_Activity : AppCompatActivity() {
                             waitView.hide()
                             Toast.makeText(this@GC_Activity,"Deleted",Toast.LENGTH_SHORT).show()
                         }
+                        video.Disconnect()
                     }
                 })
             }
@@ -262,21 +266,24 @@ class GC_Activity : AppCompatActivity() {
 
     val listener = object : VideoEngager.EventListener(){
         override fun onCallFinished() {
-            finish()
+           // finish()
         }
 
         override fun onError(error: Error): Boolean {
             runOnUiThread { waitView.hide() }
-            scheduleSettings.edit().remove("callid").apply()
             if(error.severity==Error.Severity.FATAL){
                 ACRA?.log?.e("GC_Activity",error.toString())
                 Toast.makeText(this@GC_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            }
+            if(error.source.contains("schedule",true)){
+                scheduleSettings.edit().remove("callid").apply()
+                Toast.makeText(this@GC_Activity, "Schedule meeting expired!", Toast.LENGTH_SHORT).show()
             }
             return super.onError(error)
         }
 
         override fun onAgentTimeout(): Boolean {
-            additionalSettings?.let {
+            additionalSettings.let {
                 return it.getBoolean("showAgentBusyDialog",true)
             }
             return super.onAgentTimeout()
