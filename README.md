@@ -8,8 +8,9 @@ The VideoEngager SDK for Android allows you to integrate SmartVideo application 
 * Click to audio
 * Click to video
 * supports Genesys Cloud
+* supports Genesys Cloud Schedule Callbacks
 * support SmartVideo standalone
-* supports Genesys Engage (coming soon)
+* supports Genesys Engage
 * Localization (supports English, Spanish, Portuguese, German, and Bulgarian)
 
 
@@ -36,7 +37,7 @@ Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
     ....
-    implementation 'com.videoengager:smartvideo-sdk:1.15.1'
+    implementation 'com.videoengager:smartvideo-sdk:1.15.5'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").
