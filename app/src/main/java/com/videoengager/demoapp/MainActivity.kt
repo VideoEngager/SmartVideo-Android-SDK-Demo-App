@@ -5,7 +5,6 @@
 //
 package com.videoengager.demoapp
 
-import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -15,11 +14,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import com.google.gson.Gson
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.tools.LangUtils
-import org.acra.ACRA
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,14 +25,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         findViewById<TextView>(R.id.versionView).text = "SDK Version: ${VideoEngager.SDK_VERSION}"
         findViewById<ImageButton>(R.id.button_ve).setOnClickListener {
-            startActivity(Intent(this,VE_Activity::class.java))
+            startActivity(Intent(this,VEActivity::class.java))
         }
         findViewById<ImageButton>(R.id.button_gc).setOnClickListener {
-            startActivity(Intent(this,GC_Activity::class.java))
+            startActivity(Intent(this,GCActivity::class.java))
         }
 
         findViewById<ImageButton>(R.id.button_ge).setOnClickListener {
-            startActivity(Intent(this,GE_Activity::class.java))
+            startActivity(Intent(this,GEActivity::class.java))
         }
 
         if(Lang==null){

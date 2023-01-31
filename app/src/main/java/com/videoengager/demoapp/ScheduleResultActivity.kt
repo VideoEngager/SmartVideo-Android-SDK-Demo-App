@@ -15,8 +15,8 @@ import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.model.Error
 
 class ScheduleResultActivity : AppCompatActivity() {
-    private val CREATE_FILE = 5544
-    lateinit var schInfo : com.videoengager.sdk.generic.model.schedule.Result
+
+    private lateinit var schInfo : com.videoengager.sdk.generic.model.schedule.Result
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +90,7 @@ class ScheduleResultActivity : AppCompatActivity() {
     }
 
     companion object {
-        val DELETE_ACTION = 9898
+        const val DELETE_ACTION = 9898
+        const val CREATE_FILE = 5544
     }
 }

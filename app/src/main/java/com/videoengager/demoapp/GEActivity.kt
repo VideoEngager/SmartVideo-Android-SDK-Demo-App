@@ -22,9 +22,9 @@ import com.videoengager.sdk.tools.LangUtils
 import org.acra.ACRA
 import java.util.*
 
-class GE_Activity : AppCompatActivity() {
-    lateinit var sett:Settings
-    lateinit var preferences : SharedPreferences
+class GEActivity : AppCompatActivity() {
+    private lateinit var sett:Settings
+    private lateinit var preferences : SharedPreferences
     lateinit var additionalSettings : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,12 +60,12 @@ class GE_Activity : AppCompatActivity() {
         findViewById<EditText>(R.id.auth).setText(preferences.getString("auth",""))
 
         findViewById<Button>(R.id.buttonAdditionalSettings).setOnClickListener {
-            startActivity(Intent(this@GE_Activity,AdditionalSettingsActivity::class.java))
+            startActivity(Intent(this@GEActivity,AdditionalSettingsActivity::class.java))
         }
 
     }
 
-    fun readSettings(){
+    private fun readSettings(){
        // Globals.params?.genesys_cloud_params_init?.let {
             sett = Settings(
                 VideoengagerUrl =  "https://videome.leadsecure.com",
@@ -107,32 +107,31 @@ class GE_Activity : AppCompatActivity() {
         sett.outgoingCallVC = Settings.OutgoingCallVC(additionalSettings.getBoolean("hideAvatar",false), additionalSettings.getBoolean("hideName",false))
     }
 
-    val listener = object : VideoEngager.EventListener(){
+    private val listener = object : VideoEngager.EventListener(){
         override fun onCallFinished() {
             finish()
         }
 
         override fun onError(error: Error): Boolean {
-            ACRA?.log?.e("GE_Activity",error.toString())
-            Toast.makeText(this@GE_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            ACRA.log.e("GE_Activity",error.toString())
+            Toast.makeText(this@GEActivity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
             return super.onError(error)
         }
 
         override fun onMessageReceived(message: String) {
-            Toast.makeText(this@GE_Activity, message.trim(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this@GEActivity, message.trim(), Toast.LENGTH_LONG).show()
         }
 
         override fun onAgentTimeout(): Boolean {
-            additionalSettings?.let {
+            additionalSettings.let {
                 return it.getBoolean("showAgentBusyDialog",true)
             }
-            return super.onAgentTimeout()
         }
     }
 
     override fun attachBaseContext(newBase: Context) {
         val localeUpdatedContext: ContextWrapper = LangUtils.updateLocale(newBase, Locale(
-            MainActivity.Lang!!.value?:"")
+            MainActivity.Lang!!.value)
         )
         super.attachBaseContext(localeUpdatedContext)
     }

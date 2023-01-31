@@ -8,14 +8,6 @@
         tools:node="remove"
         tools:selector="com.videoengager.sdk" />
 
-<!--    <application-->
-<!--        android:allowBackup="true"-->
-<!--        android:icon="@mipmap/ic_launcher"-->
-<!--        android:label="@string/app_name"-->
-<!--        android:roundIcon="@mipmap/ic_launcher_round"-->
-<!--        android:supportsRtl="true"-->
-<!--        android:theme="@style/Theme.SmartVideo">-->
-
     <application
         android:name=".ErrorReportingApplication"
         android:allowBackup="true"
@@ -24,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartVideo">
-
+        <activity
+            android:name=".AvailabilityActivity"
+            android:exported="false" />
         <activity
             android:name=".ScheduleResultActivity"
             android:exported="false" />
@@ -36,18 +30,20 @@
             android:name=".LangSelectorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GC_Activity"
+            android:name=".GCActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".VE_Activity"
+            android:name=".VEActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter
                 android:autoVerify="true"
                 android:label="SmartVideo Call">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="https" />
                 <data android:host="videome.leadsecure.com" />
                 <data android:host="videome.videoengager.com" />
@@ -56,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GE_Activity"
+            android:name=".GEActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".WebChat"

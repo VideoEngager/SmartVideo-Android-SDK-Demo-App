@@ -24,7 +24,7 @@ class WebChat : AppCompatActivity() {
         chatBox.text=""
         findViewById<ImageButton>(R.id.sendButt).setOnClickListener {
             Globals.chat?.SendMessage(msgBox.text.toString())
-            chatBox.append("ME->${msgBox.text.toString()}\n")
+            chatBox.append("ME->${msgBox.text}\n")
             scrollView.post {
                 scrollView.fullScroll(View.FOCUS_DOWN)
             }
