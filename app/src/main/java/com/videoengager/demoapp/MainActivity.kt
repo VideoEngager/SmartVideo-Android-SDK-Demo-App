@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.tools.LangUtils
@@ -23,7 +24,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val prefs = getSharedPreferences("additional", MODE_PRIVATE)
         findViewById<TextView>(R.id.versionView).text = "SDK Version: ${VideoEngager.SDK_VERSION}"
+
+        //setup screenshare restriction policies
+        VideoEngager.VeRegisterScreenSharePolicies(this, mutableListOf(R.id.avatarImageUrl), prefs.getBoolean("restrictPhone",false))
+
         findViewById<ImageButton>(R.id.button_ve).setOnClickListener {
             startActivity(Intent(this,VEActivity::class.java))
         }

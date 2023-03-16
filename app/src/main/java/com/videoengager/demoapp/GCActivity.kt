@@ -36,7 +36,6 @@ class GCActivity : AppCompatActivity() {
     lateinit var additionalSettings : SharedPreferences
     lateinit var scheduleSettings : SharedPreferences
     lateinit var waitView : AlertDialog
-    var video : VideoEngager? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,9 +78,9 @@ class GCActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
             readSettings()
-            video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
-            if (video?.Connect(VideoEngager.CallType.audio)==true) {
-                video?.onEventListener = listener
+            val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+            if (video.Connect(VideoEngager.CallType.audio)==true) {
+                video.onEventListener = listener
             } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
         }
 
@@ -98,9 +97,9 @@ class GCActivity : AppCompatActivity() {
             customFields["audioonlycall"]=audioonlycallFlag
             customFields["chatonly"]=chatonlyFlag
             sett.CustomFields=customFields
-            video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
-            if (video?.Connect(VideoEngager.CallType.video)==true) {
-                video?.onEventListener = listener
+            val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+            if (video.Connect(VideoEngager.CallType.video)==true) {
+                video.onEventListener = listener
             } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
         }
 
@@ -218,11 +217,11 @@ class GCActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.button_pause_screen_share).setOnClickListener {
-            video?.VePauseScreenShare()
+            VideoEngager.VeForcePauseScreenShare(this@GCActivity)
         }
 
         findViewById<Button>(R.id.button_resume_screen_share).setOnClickListener {
-            video?.VeResumeScreenShare()
+            VideoEngager.VeForceResumeScreenShare(this@GCActivity)
         }
     }
 
