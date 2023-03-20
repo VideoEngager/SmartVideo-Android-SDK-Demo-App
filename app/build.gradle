@@ -42,7 +42,8 @@ dependencies {
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
     //implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
-    implementation 'com.applandeo:material-calendar-view:1.7.0'
+    //implementation 'com.applandeo:material-calendar-view:1.7.0'
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -52,14 +53,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //sdk imports release
-    implementation 'com.videoengager:smartvideo-sdk:1.16.0'
+    implementation 'com.videoengager:smartvideo-sdk:1.16.1'
     //internal usage
 //    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\outputs\\aar\\smartvideo-sdk-debug.aar')
+    //    implementation 'org.webrtc:google-webrtc:1.0.32006'
+//    implementation "com.shopgun.android:zoomlayout:2.0.0"
 //    implementation 'com.google.code.gson:gson:2.8.6'
 //    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
 //    implementation 'com.squareup.picasso:picasso:2.71828'
-//    implementation 'org.webrtc:google-webrtc:1.0.32006'
-//    implementation "com.shopgun.android:zoomlayout:2.0.0"
-//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+//
+//   // implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
 //    implementation "androidx.lifecycle:lifecycle-process:2.5.1"
+//    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\repo\\com\\videoengager\\smartvideo-sdk\\1.16.1\\smartvideo-sdk-1.16.1.aar')
+
 }
