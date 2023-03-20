@@ -145,14 +145,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/start_audio_button"
-            app:layout_constraintBottom_toTopOf="@+id/buttonvideo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/buttonchat"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalSettings" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonvideo" />
 
         <Button
             android:id="@+id/buttonvideo"
@@ -161,40 +159,73 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:text="@string/start_video_button"
-            app:layout_constraintBottom_toTopOf="@+id/buttonchat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonaudio" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalSettings" />
 
         <Button
             android:id="@+id/buttonchat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
             android:text="@string/start_chat_button"
-            app:layout_constraintBottom_toTopOf="@+id/buttonschedule"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonaudio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonaudio"
+            app:layout_constraintTop_toTopOf="@+id/buttonaudio" />
+
+        <Button
+            android:id="@+id/button_pause_screen_share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/pause_screen_shae"
+            app:layout_constraintEnd_toStartOf="@+id/button_resume_screen_share"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonaudio" />
+
+        <Button
+            android:id="@+id/button_resume_screen_share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/resume_screen_share"
+            app:layout_constraintBottom_toBottomOf="@+id/button_pause_screen_share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_pause_screen_share"
+            app:layout_constraintTop_toTopOf="@+id/button_pause_screen_share" />
+
+        <Button
+            android:id="@+id/buttonavailability"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/availability"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonvideo" />
+            app:layout_constraintTop_toBottomOf="@+id/button_pause_screen_share" />
 
         <Button
             android:id="@+id/buttonschedule"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="@string/start_schedule_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonchat" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonavailability" />
 
         <EditText
             android:id="@+id/orgid"

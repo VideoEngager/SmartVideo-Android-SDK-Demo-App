@@ -22,9 +22,9 @@ import com.videoengager.sdk.tools.LangUtils
 import org.acra.ACRA
 import java.util.*
 
-class VE_Activity : AppCompatActivity() {
-    lateinit var veVisitorUrl : EditText
-    lateinit var preferences : SharedPreferences
+class VEActivity : AppCompatActivity() {
+    private lateinit var veVisitorUrl : EditText
+    private lateinit var preferences : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,14 +71,14 @@ class VE_Activity : AppCompatActivity() {
         }
     }
 
-    val listener = object : VideoEngager.EventListener(){
+    private val listener = object : VideoEngager.EventListener(){
         override fun onCallFinished() {
             finish()
         }
 
         override fun onError(error: Error): Boolean {
-            ACRA?.log?.e("VE_Activity",error.toString())
-            Toast.makeText(this@VE_Activity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+            ACRA.log.e("VE_Activity",error.toString())
+            Toast.makeText(this@VEActivity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
             return super.onError(error)
         }
     }

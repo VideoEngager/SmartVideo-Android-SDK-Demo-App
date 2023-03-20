@@ -430,6 +430,44 @@ val scheduleCallbackAnswer = object : Answer() {
 video.VeVisitorGetScheduleMeeting(callId, scheduleCallbackAnswer)
 ```
 
+### Availability
+We provide several methods to request schedule meeting with Genesys Cloud Agent.
+You can see implementation of `Availability API` in ``GCActivity.kt`` and ``AvailabilityActivity.kt`` .
+
+Examples and usages:
+
+* Check for enabled availability support of organization
+  For this operation you need to call method `VeChackAgentAvailability` of the SDK.
+```kotlin
+val video = VideoEngager(this, sett, VideoEngager.Engine.genesys)
+video.onEventListener = listener
+video.VeChackAgentAvailability(object:Availability(){
+  override fun onIsAvailableResult(hasAvailability: Boolean) {
+    video.Disconnect()
+    if(hasAvailability){
+      // Organization support Availability
+    }else{
+      // Organization do not support Availability
+    }
+  }
+})
+```
+
+* Request free Agent's time slots
+For this operation you need to call method `VeGetAgentAvailabilityTimeSlots` of the SDK.
+For full implementation please look at ``AvailabilityActivity.kt`` method : `fun loadSlots(forDate:Date){...}`
+
+```kotlin
+val video = VideoEngager(this@AvailabilityActivity, settings, VideoEngager.Engine.genesys)
+video.onEventListener = listener
+val forDate = Calendar.getInstance().time
+video.VeGetAgentAvailabilityTimeSlots(forDate, 1, object : Availability() {
+  override fun onTimeSlotsResult(timeSlots: List<AvailabilityTimeSlots>) {
+    // Read and populate timeSlots based on your logic
+    //You can use timeSlot to request Schedule video meeting
+  }
+})
+```
 
 ### Error Handling
 This step requires to prepare your app for error handling.

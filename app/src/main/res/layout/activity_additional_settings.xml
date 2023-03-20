@@ -173,6 +173,13 @@
                 android:layout_height="wrap_content"
                 android:text="OutgoingCallVC / hideName" />
 
+            <CheckBox
+                android:id="@+id/restrictPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:text="Stop Screen share on App Minimized" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
