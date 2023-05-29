@@ -15,7 +15,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.edit
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.enums.CallType
+import com.videoengager.sdk.enums.Engine
 import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
@@ -35,18 +38,26 @@ class GEActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
             readSettings()
-            val video = VideoEngager(this, sett, VideoEngager.Engine.engage)
-            if (video.Connect(VideoEngager.CallType.audio)) {
-                video.onEventListener = listener
-            } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            if (SmartVideo.IsInCall) {
+                Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+            } else {
+                SmartVideo.Initialize(this, sett, Engine.engage)
+                if (SmartVideo.Connect(CallType.audio)) {
+                    SmartVideo.onEventListener = listener
+                } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            }
         }
 
         findViewById<Button>(R.id.buttonvideo).setOnClickListener {
             readSettings()
-            val video = VideoEngager(this, sett, VideoEngager.Engine.engage)
-            if (video.Connect(VideoEngager.CallType.video)) {
-                video.onEventListener = listener
-            } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            if (SmartVideo.IsInCall) {
+                Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+            } else {
+                SmartVideo.Initialize(this, sett, Engine.engage)
+                if (SmartVideo.Connect(CallType.video)) {
+                    SmartVideo.onEventListener = listener
+                } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            }
         }
 
         //load settings previous settings

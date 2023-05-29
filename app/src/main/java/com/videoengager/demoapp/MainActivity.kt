@@ -14,10 +14,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import com.google.gson.Gson
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.tools.LangUtils
+import org.acra.ACRA
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,10 +26,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val prefs = getSharedPreferences("additional", MODE_PRIVATE)
-        findViewById<TextView>(R.id.versionView).text = "SDK Version: ${VideoEngager.SDK_VERSION}"
+        findViewById<TextView>(R.id.versionView).text = "SDK Version: ${SmartVideo.SDK_VERSION}"
 
         //setup screenshare restriction policies
-        VideoEngager.VeRegisterScreenSharePolicies(this, mutableListOf(R.id.avatarImageUrl), prefs.getBoolean("restrictPhone",false))
+        SmartVideo.VeRegisterScreenSharePolicies(this, mutableListOf(R.id.avatarImageUrl), prefs.getBoolean("restrictPhone",false))
 
         findViewById<ImageButton>(R.id.button_ve).setOnClickListener {
             startActivity(Intent(this,VEActivity::class.java))
@@ -50,8 +51,7 @@ class MainActivity : AppCompatActivity() {
 
        findViewById<Button>(R.id.button_logging).apply {
            setOnClickListener {
-               val v = findViewById<TextView>(R.id.text)
-               v.setText("dummy error")
+               ACRA.errorReporter.handleException(null)
            }
            if(application.javaClass.simpleName!=ErrorReportingApplication::class.java.simpleName){
                visibility = View.GONE
