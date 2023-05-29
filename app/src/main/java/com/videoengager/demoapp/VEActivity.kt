@@ -16,7 +16,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.enums.CallType
+import com.videoengager.sdk.enums.Engine
 import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.tools.LangUtils
 import org.acra.ACRA
@@ -50,11 +53,15 @@ class VEActivity : AppCompatActivity() {
 //        )
 
         findViewById<Button>(R.id.button_video).setOnClickListener {
-            val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-            if(video.Connect(VideoEngager.CallType.video)) {
-                video.onEventListener = listener
-                video.VeVisitorVideoCall(veVisitorUrl.text.toString())
-            }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            if (SmartVideo.IsInCall) {
+                Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+            } else {
+                SmartVideo.Initialize(this, sett, Engine.generic)
+                if (SmartVideo.Connect(CallType.video)) {
+                    SmartVideo.onEventListener = listener
+                    SmartVideo.VeVisitorVideoCall(veVisitorUrl.text.toString())
+                } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            }
         }
 
         veVisitorUrl.addTextChangedListener {
@@ -63,17 +70,22 @@ class VEActivity : AppCompatActivity() {
 
         //handle deep links
         if(intent.action== Intent.ACTION_VIEW && intent.data!=null){
-            val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-            if(video.Connect(VideoEngager.CallType.video)) {
-                video.onEventListener = listener
-                video.VeVisitorVideoCall(intent.dataString?:"")
-            }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            if (SmartVideo.IsInCall) {
+                Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+            } else {
+                SmartVideo.Initialize(this, sett, Engine.generic)
+                if (SmartVideo.Connect(CallType.video)) {
+                    SmartVideo.onEventListener = listener
+                    SmartVideo.VeVisitorVideoCall(intent.dataString ?: "")
+                } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private val listener = object : VideoEngager.EventListener(){
         override fun onCallFinished() {
             finish()
+            SmartVideo.Dispose()
         }
 
         override fun onError(error: Error): Boolean {

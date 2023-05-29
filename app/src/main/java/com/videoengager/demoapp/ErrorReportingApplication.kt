@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
 import org.acra.config.dialog
 import org.acra.config.mailSender
@@ -14,7 +15,7 @@ class ErrorReportingApplication : Application() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        VideoEngager.SDK_DEBUG = true
+        SmartVideo.SDK_DEBUG = true
         initAcra {
             //core configuration:
             buildConfigClass = BuildConfig::class.java

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
 import java.util.concurrent.Executors
 
@@ -23,14 +24,14 @@ class WebChat : AppCompatActivity() {
         val scrollView = findViewById<ScrollView>(R.id.msgScroll)
         chatBox.text=""
         findViewById<ImageButton>(R.id.sendButt).setOnClickListener {
-            Globals.chat?.SendMessage(msgBox.text.toString())
+            SmartVideo.SendMessage(msgBox.text.toString())
             chatBox.append("ME->${msgBox.text}\n")
             scrollView.post {
                 scrollView.fullScroll(View.FOCUS_DOWN)
             }
             msgBox.text.clear()
         }
-        Globals.chat?.onEventListener=object : VideoEngager.EventListener(){
+        SmartVideo.onEventListener=object : VideoEngager.EventListener(){
 
             override fun onCallFinished() {
                 Toast.makeText(this@WebChat,"Chat Ended!",Toast.LENGTH_SHORT).show()
@@ -43,7 +44,7 @@ class WebChat : AppCompatActivity() {
                     scrollView.fullScroll(View.FOCUS_DOWN)
                 }
                 if(message.startsWith("https") && message.contains(".com/ve/")){
-                    Globals.chat?.VeVisitorVideoCall(message)
+                    SmartVideo.VeVisitorVideoCall(message)
                 }
             }
 
@@ -55,7 +56,7 @@ class WebChat : AppCompatActivity() {
 
     override fun onBackPressed() {
         Executors.newSingleThreadExecutor().execute {
-            Globals.chat?.Disconnect()
+            SmartVideo.Dispose()
         }
         super.onBackPressed()
     }

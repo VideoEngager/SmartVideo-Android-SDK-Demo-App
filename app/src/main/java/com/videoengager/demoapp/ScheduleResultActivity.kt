@@ -11,7 +11,10 @@ import android.provider.CalendarContract
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.enums.CallType
+import com.videoengager.sdk.enums.Engine
 import com.videoengager.sdk.model.Error
 
 class ScheduleResultActivity : AppCompatActivity() {
@@ -32,16 +35,20 @@ class ScheduleResultActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button_sch_openmeeting).setOnClickListener {
             val sett=Globals.params?.generic_params_init!!
             sett.Language = MainActivity.Lang?:VideoEngager.Language.ENGLISH
-            val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-            if(video.Connect(VideoEngager.CallType.video)) {
-                video.onEventListener = object : VideoEngager.EventListener(){
-                    override fun onError(error: Error): Boolean {
-                        Toast.makeText(this@ScheduleResultActivity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
-                        return super.onError(error)
+            if(SmartVideo.IsInCall){
+                Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+            }else {
+                SmartVideo.Initialize(this, sett, Engine.generic)
+                if (SmartVideo.Connect(CallType.video)) {
+                    SmartVideo.onEventListener = object : VideoEngager.EventListener() {
+                        override fun onError(error: Error): Boolean {
+                            Toast.makeText(this@ScheduleResultActivity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
+                            return super.onError(error)
+                        }
                     }
-                }
-                video.VeVisitorVideoCall(schInfo.veVisitorUrl)
-            }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+                    SmartVideo.VeVisitorVideoCall(schInfo.veVisitorUrl)
+                } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+            }
         }
 
         findViewById<Button>(R.id.button_sch_addtocalendar).setOnClickListener {
