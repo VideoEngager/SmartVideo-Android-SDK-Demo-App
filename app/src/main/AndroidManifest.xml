@@ -8,6 +8,8 @@
         tools:node="remove"
         tools:selector="com.videoengager.sdk" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:name=".ErrorReportingApplication"
         android:allowBackup="true"
@@ -16,6 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartVideo">
+        <service
+            android:name=".PushNotificationsReceiverService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".AvailabilityActivity"
             android:exported="false" />

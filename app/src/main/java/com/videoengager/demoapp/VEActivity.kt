@@ -33,13 +33,18 @@ class VEActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_v_e)
         preferences = getSharedPreferences("ve_preferences", MODE_PRIVATE)
+        val gc_preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
         veVisitorUrl = findViewById(R.id.ve_url)
         veVisitorUrl.setText(preferences.getString("veUrl",""))
         if(Globals.params==null){
             Globals.params= Gson().fromJson(assets.open("params.json").reader(Charsets.UTF_8),Params::class.java)
         }
+
         val sett=Globals.params?.generic_params_init!!
         sett.Language = MainActivity.Lang?:VideoEngager.Language.ENGLISH
+        if(gc_preferences.contains("VideoengagerUrl")){
+            sett.VideoengagerUrl = gc_preferences.getString("VideoengagerUrl","").toString()
+        }
 //        val sett = Settings(
 //            "",
 //            "",

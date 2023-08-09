@@ -5,15 +5,24 @@
 //
 package com.videoengager.demoapp
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
@@ -57,6 +66,43 @@ class MainActivity : AppCompatActivity() {
                visibility = View.GONE
            }
        }
+
+        //check if user was click push notification and start SDK
+        if(intent?.hasExtra("veurl")==true){
+            //simulate deep link handle
+            startActivity(Intent(this,VEActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse(intent.getStringExtra("veurl"))
+            })
+        }
+
+        //helper to copy device token
+        findViewById<Button>(R.id.button_push_token).setOnClickListener {
+           FirebaseMessaging.getInstance().token.addOnCompleteListener {
+               AlertDialog.Builder(this@MainActivity)
+                   .setTitle("Token")
+                   .setMessage(it.result)
+                   .setNegativeButton("Copy") { dialog, which ->
+                       run {
+                           (getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).apply {
+                                setPrimaryClip(ClipData.newPlainText("Token",it.result))
+                           }
+                       }
+                   }
+                   .setPositiveButton("OK",null)
+                   .show()
+           }
+        }
+
+        //We need permission to receive push messages
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions( arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 9999);
+            }
+        }
+
     }
 
     override fun attachBaseContext(newBase: Context) {
