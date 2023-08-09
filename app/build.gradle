@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -38,7 +39,7 @@ android {
 }
 
 dependencies {
-    def acraVersion = '5.9.7'
+    def acraVersion = '5.10.1'
     implementation "ch.acra:acra-mail:$acraVersion"
     implementation "ch.acra:acra-dialog:$acraVersion"
     //implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
@@ -65,5 +66,7 @@ dependencies {
 //   // implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
 //    implementation "androidx.lifecycle:lifecycle-process:2.5.1"
 //    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\repo\\com\\videoengager\\smartvideo-sdk\\1.16.1\\smartvideo-sdk-1.16.1.aar')
-
+    //android fcm libs used for push notifications
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
+    implementation("com.google.firebase:firebase-messaging-ktx")
 }
