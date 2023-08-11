@@ -21,6 +21,7 @@ class ErrorReportingApplication : Application() {
             buildConfigClass = BuildConfig::class.java
             reportFormat = StringFormat.KEY_VALUE_LIST
             logcatArguments = arrayOf("-t","5000","-v","long").asList()
+            deleteUnapprovedReportsOnApplicationStart = true
             //deleteUnapprovedReportsOnApplicationStart = false
             //each plugin you chose above can be configured in a block like this:
             mailSender {

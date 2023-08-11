@@ -7,6 +7,7 @@ The VideoEngager SDK for Android allows you to integrate SmartVideo application 
 
 * Click to audio
 * Click to video
+* Short Url call
 * supports Genesys Cloud
 * supports Genesys Cloud Schedule Callbacks
 * support SmartVideo standalone
@@ -37,7 +38,7 @@ Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
     ....
-    implementation 'com.videoengager:smartvideo-sdk:1.15.5'
+    implementation 'com.videoengager:smartvideo-sdk:1.17.1'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").
@@ -50,15 +51,8 @@ These permissions should be added to the application's `AndroidManifext.xml` fil
 <uses-permission android:name="android.permission.CAMERA" />  
 <uses-permission android:name="android.permission.RECORD_AUDIO" />  
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
-<uses-permission android:name="android.permission.BLUETOOTH" />  
 <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />  
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />    
-<uses-feature android:name="android.hardware.camera" />    
-<uses-permission android:name="android.permission.FLASHLIGHT"/>    
-<permission android:name="android.permission.FLASHLIGHT"  
-  android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"  
-  android:protectionLevel="normal" />  
-<uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 ```
 
 

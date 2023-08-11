@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //sdk imports release
-    implementation 'com.videoengager:smartvideo-sdk:1.17.0'
+    implementation 'com.videoengager:smartvideo-sdk:1.17.1'
     //internal usage
 //    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\outputs\\aar\\smartvideo-sdk-debug.aar')
 //    //    implementation 'org.webrtc:google-webrtc:1.0.32006'
