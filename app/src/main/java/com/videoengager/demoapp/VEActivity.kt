@@ -40,7 +40,7 @@ class VEActivity : AppCompatActivity() {
             Globals.params= Gson().fromJson(assets.open("params.json").reader(Charsets.UTF_8),Params::class.java)
         }
 
-        val sett=Globals.params?.generic_params_init!!
+        val sett=Globals.params?.genesys_cloud_params_init!!
         sett.Language = MainActivity.Lang?:VideoEngager.Language.ENGLISH
         if(gc_preferences.contains("VideoengagerUrl")){
             sett.VideoengagerUrl = gc_preferences.getString("VideoengagerUrl","").toString()
