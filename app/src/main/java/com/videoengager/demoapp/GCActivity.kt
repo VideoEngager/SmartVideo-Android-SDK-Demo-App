@@ -44,6 +44,7 @@ class GCActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_c)
+        window.applyCustomColors(getSharedPreferences("additional", MODE_PRIVATE))
         preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
         additionalSettings = getSharedPreferences("additional", MODE_PRIVATE)
         scheduleSettings = getSharedPreferences("schedule", MODE_PRIVATE)

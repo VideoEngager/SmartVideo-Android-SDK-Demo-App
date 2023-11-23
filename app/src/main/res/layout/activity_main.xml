@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/button_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:text="Settings"
+        android:textColor="@color/primary"
+        app:iconTint="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/versionView"
         android:layout_width="wrap_content"
@@ -30,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_ve"
+        app:layout_constraintTop_toBottomOf="@+id/button_td"
         app:srcCompat="@drawable/genesys_cloud" />
 
     <ImageButton
@@ -42,7 +54,7 @@
         android:background="?attr/selectableItemBackground"
         android:padding="16dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_push_token"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +70,7 @@
         android:background="?attr/selectableItemBackground"
         android:padding="16dp"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/button_gc"
+        app:layout_constraintBottom_toTopOf="@+id/button_td"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="2022 VideoEngager Inc."
+        android:text="2023 VideoEngager Inc."
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,15 +92,13 @@
         android:id="@+id/button_logging"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:background="?attr/selectableItemBackground"
         android:text="@string/sendlogs"
         android:textColor="@color/primary"
         app:icon="@drawable/ic_mail_24"
         app:iconTint="@color/primary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_push_token"
@@ -101,4 +111,20 @@
         app:iconTint="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/versionView"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_td"
+        android:layout_width="379dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/button_gc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_ve"
+        app:srcCompat="@drawable/talkdesk" />
 </androidx.constraintlayout.widget.ConstraintLayout>

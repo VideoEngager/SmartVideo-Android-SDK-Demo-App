@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="module_types">
+        <item>All</item>
+        <item>VideoEngager Generic</item>
+        <item>Genesys Cloud</item>
+        <item>TalkDesk</item>
+        <item>Genesys Engage</item>
+    </array>
+</resources>

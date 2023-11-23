@@ -33,6 +33,7 @@ class GEActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_g_e)
+        window.applyCustomColors(getSharedPreferences("additional", MODE_PRIVATE))
         preferences = getSharedPreferences("genesys_engage", MODE_PRIVATE)
         additionalSettings = getSharedPreferences("additional", MODE_PRIVATE)
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
