@@ -21,6 +21,72 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Small"
+                android:text="Enabled modules"/>
+
+            <Spinner
+                android:id="@+id/moduleTypes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                android:entries="@array/module_types"
+                android:background="@drawable/edit_text_bkgnd"
+                android:gravity="center"
+                android:minHeight="40dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_marginTop="8dp"
+                android:text="Buttons style"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/butt_back_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="Back Color"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/butt_text_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Text Color"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_marginTop="8dp"
+                android:text="Logo Image Url"/>
+            <EditText
+                android:id="@+id/logoImageUrl"
+                android:hint="Logo Image Url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_bkgnd"
+                android:drawableStart="@drawable/url"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="textUri"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Small"
                 android:text="Avatar Image Url"/>
             <EditText
                 android:id="@+id/avatarImageUrl"

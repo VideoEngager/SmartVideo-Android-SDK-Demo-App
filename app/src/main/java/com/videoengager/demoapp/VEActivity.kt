@@ -32,6 +32,8 @@ class VEActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_v_e)
+        window.applyCustomColors(getSharedPreferences("additional", MODE_PRIVATE))
+        SmartVideo.SDK_DEBUG = true
         preferences = getSharedPreferences("ve_preferences", MODE_PRIVATE)
         val gc_preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
         veVisitorUrl = findViewById(R.id.ve_url)
@@ -69,6 +71,30 @@ class VEActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.button_pin).setOnClickListener {
+            val pin = findViewById<EditText>(R.id.pin).text.toString()
+            if(!pin.isNullOrEmpty()){
+                try {
+                    SmartVideo.Initialize(this, sett, Engine.generic)
+                    if (SmartVideo.Connect(CallType.video)) {
+                        SmartVideo.onEventListener = listener
+                        SmartVideo.VeVisitorVideoCall(pin)
+                    } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+                }catch (ex:Exception){
+                    Toast.makeText(this, ex.message, Toast.LENGTH_LONG).show()
+                }
+            }else{
+                Toast.makeText(this@VEActivity,"Enter PIN",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        findViewById<Button>(R.id.button_cb).setOnClickListener {
+            if(!SmartVideo.IsInCall) {
+                SmartVideo.Initialize(this, sett, Engine.generic)
+            }
+            SmartVideo.VeStartCoBrowse()
+        }
+
         veVisitorUrl.addTextChangedListener {
             preferences.edit().putString("veUrl",veVisitorUrl.text.toString()).apply()
         }
@@ -97,6 +123,10 @@ class VEActivity : AppCompatActivity() {
             ACRA.log.e("VE_Activity",error.toString())
             Toast.makeText(this@VEActivity, "Error:${error.message}", Toast.LENGTH_SHORT).show()
             return super.onError(error)
+        }
+
+        override fun onErrorMessage(type: String, message: String) {
+            Toast.makeText(this@VEActivity,message,Toast.LENGTH_LONG).show()
         }
     }
 

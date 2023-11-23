@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //sdk imports release
-    implementation 'com.videoengager:smartvideo-sdk:1.17.1'
+    implementation 'com.videoengager:smartvideo-sdk:1.17.2'
     //internal usage
 //    implementation files('C:\\Users\\valioman\\AndroidStudioProjects\\VideoEngagerKotlinSDK\\sdk\\build\\outputs\\aar\\smartvideo-sdk-debug.aar')
 //    //    implementation 'org.webrtc:google-webrtc:1.0.32006'
@@ -69,4 +69,6 @@ dependencies {
     //android fcm libs used for push notifications
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
     implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation 'io.cobrowse:cobrowse-sdk-android:2.30.1'
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
 }

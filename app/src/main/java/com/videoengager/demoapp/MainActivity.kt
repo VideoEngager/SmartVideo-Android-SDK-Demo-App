@@ -22,6 +22,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.videoengager.sdk.SmartVideo
@@ -40,15 +41,39 @@ class MainActivity : AppCompatActivity() {
         //setup screenshare restriction policies
         SmartVideo.VeRegisterScreenSharePolicies(this, mutableListOf(R.id.avatarImageUrl), prefs.getBoolean("restrictPhone",false))
 
-        findViewById<ImageButton>(R.id.button_ve).setOnClickListener {
+        findViewById<ImageButton>(R.id.button_ve).apply {
+            prefs.getInt("modelTypeIndex",0).let {
+                isVisible = (it==0 || it==1)
+            }
+        }.setOnClickListener {
             startActivity(Intent(this,VEActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.button_gc).setOnClickListener {
+        findViewById<ImageButton>(R.id.button_gc).apply {
+            prefs.getInt("modelTypeIndex",0).let {
+                isVisible = (it==0 || it==2)
+            }
+        }.setOnClickListener {
             startActivity(Intent(this,GCActivity::class.java))
         }
 
-        findViewById<ImageButton>(R.id.button_ge).setOnClickListener {
+        findViewById<ImageButton>(R.id.button_ge).apply {
+            prefs.getInt("modelTypeIndex",0).let {
+                isVisible = (it==0 || it==4)
+            }
+        }.setOnClickListener {
             startActivity(Intent(this,GEActivity::class.java))
+        }
+
+        findViewById<ImageButton>(R.id.button_td).apply {
+            prefs.getInt("modelTypeIndex",0).let {
+                isVisible = (it==0 || it==3)
+            }
+        }.setOnClickListener {
+            startActivity(Intent(this,TDActivity::class.java))
+        }
+
+        findViewById<Button>(R.id.button_settings).setOnClickListener {
+            startActivity(Intent(this,AdditionalSettingsActivity::class.java))
         }
 
         if(Lang==null){
