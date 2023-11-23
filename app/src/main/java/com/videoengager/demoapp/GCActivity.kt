@@ -247,6 +247,24 @@ class GCActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button_resume_screen_share).setOnClickListener {
             SmartVideo.VeForceResumeScreenShare(this@GCActivity)
         }
+
+        findViewById<Button>(R.id.button_pin).setOnClickListener {
+            readSettings()
+            val pin = findViewById<EditText>(R.id.pin).text.toString()
+            if(!pin.isNullOrEmpty()){
+                try {
+                    SmartVideo.Initialize(this, sett, Engine.generic)
+                    if (SmartVideo.Connect(CallType.video)) {
+                        SmartVideo.onEventListener = listener
+                        SmartVideo.VeVisitorVideoCall(pin)
+                    } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+                }catch (ex:Exception){
+                    Toast.makeText(this, ex.message, Toast.LENGTH_LONG).show()
+                }
+            }else{
+                Toast.makeText(this@GCActivity,"Enter PIN",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private val scheduleCallbackAnswer = object : Answer() {
@@ -361,6 +379,10 @@ class GCActivity : AppCompatActivity() {
                 Toast.makeText(this@GCActivity, "Schedule meeting expired!", Toast.LENGTH_SHORT).show()
             }
             return super.onError(error)
+        }
+
+        override fun onErrorMessage(type: String, message: String) {
+            Toast.makeText(this@GCActivity, message, Toast.LENGTH_SHORT).show()
         }
 
         override fun onAgentTimeout(): Boolean {

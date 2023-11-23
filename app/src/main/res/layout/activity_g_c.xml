@@ -150,6 +150,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/queue" />
 
+        <EditText
+            android:id="@+id/pin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/edit_text_bkgnd"
+            android:drawableStart="@drawable/url"
+            android:ems="10"
+            android:gravity="center_horizontal"
+            android:hint="PIN"
+            android:inputType="number"
+            android:padding="10dp"
+            android:text=""
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalSettings"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <Button
+            android:id="@+id/button_pin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="Start VIDEO with pin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pin" />
+
         <Button
             android:id="@+id/buttonaudio"
             android:layout_width="0dp"
@@ -172,7 +207,7 @@
             android:text="@string/start_video_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonAdditionalSettings" />
+            app:layout_constraintTop_toBottomOf="@+id/button_pin" />
 
         <Button
             android:id="@+id/buttonchat"
