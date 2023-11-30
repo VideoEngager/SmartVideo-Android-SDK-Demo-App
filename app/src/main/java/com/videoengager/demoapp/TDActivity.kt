@@ -49,7 +49,7 @@ class TDActivity : AppCompatActivity(),CobrowseIO.Redacted {
         flowIdBox.setText(tdPrefs.getString("flow","c2a25a3a17fa43ba9c28aab62c9862fd"))
        // flowIdBox.setText(tdPrefs.getString("flow","7e95b243344f46808743bc6ee366bd2f"))
         findViewById<Button>(R.id.button_video).setOnClickListener {
-            VideoEngager.SDK_DEBUG=true
+            SmartVideo.SDK_DEBUG=true
 
             // sett.TennathId = "Xh6at3QenNopCTcP"
             sett.flowId=flowIdBox.text.toString()
@@ -69,6 +69,7 @@ class TDActivity : AppCompatActivity(),CobrowseIO.Redacted {
         findViewById<Button>(R.id.button_cb).setOnClickListener {
             if(!SmartVideo.IsInCall) {
                 SmartVideo.Initialize(this, sett, Engine.generic)
+                SmartVideo.onEventListener = listener
             }
             SmartVideo.VeStartCoBrowse()
         }

@@ -487,5 +487,5 @@ If you have any questions, please contact our [support team](mailto:support@vide
 
 ## Demo app download link
 
-https://drive.google.com/file/d/1f5zqj9O65OH42OV-FI5F3smzrwwxXz2B
+https://drive.google.com/file/d/1LXyTmuxMD9I8IN41DOwiAnb6eDU98VOo/view?usp=drive_link
 

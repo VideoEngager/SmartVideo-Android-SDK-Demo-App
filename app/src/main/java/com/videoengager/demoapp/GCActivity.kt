@@ -265,6 +265,15 @@ class GCActivity : AppCompatActivity() {
                 Toast.makeText(this@GCActivity,"Enter PIN",Toast.LENGTH_SHORT).show()
             }
         }
+
+        findViewById<Button>(R.id.buttoncobrowse).setOnClickListener {
+            if(!SmartVideo.IsInCall) {
+                readSettings()
+                SmartVideo.Initialize(this, sett, Engine.generic)
+                SmartVideo.onEventListener = listener
+            }
+            SmartVideo.VeStartCoBrowse()
+        }
     }
 
     private val scheduleCallbackAnswer = object : Answer() {
