@@ -11,12 +11,14 @@ import android.content.*
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.VideoEngager
 import com.videoengager.sdk.enums.CallType
@@ -39,6 +41,7 @@ class GCActivity : AppCompatActivity() {
     lateinit var additionalSettings : SharedPreferences
     lateinit var scheduleSettings : SharedPreferences
     lateinit var waitView : AlertDialog
+    private var useMessagingApi = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,27 +60,38 @@ class GCActivity : AppCompatActivity() {
             .create()
 
        if(!preferences.contains("VideoengagerUrl")) {//load defaults from params.json
-           Globals.params?.genesys_cloud_params_init?.let {
-               findViewById<EditText>(R.id.orgid).setText(it.OrganizationId)
-               findViewById<EditText>(R.id.depid).setText(it.DeploymentId)
-               findViewById<EditText>(R.id.videourl).setText(it.VideoengagerUrl)
-               findViewById<EditText>(R.id.tenid).setText(it.TennathId)
-               findViewById<EditText>(R.id.env).setText(it.Environment)
-               findViewById<EditText>(R.id.queue).setText(it.Queue)
-               findViewById<EditText>(R.id.name).setText(it.MyNickname)
-           }
+           LoadDefaultSettings()
        }else
        {
            //load modified
-           findViewById<EditText>(R.id.orgid).setText(preferences.getString("OrganizationId",""))
-           findViewById<EditText>(R.id.depid).setText(preferences.getString("DeploymentId",""))
-           findViewById<EditText>(R.id.videourl).setText(preferences.getString("VideoengagerUrl",""))
-           findViewById<EditText>(R.id.tenid).setText(preferences.getString("TennathId",""))
-           findViewById<EditText>(R.id.env).setText(preferences.getString("Environment",""))
-           findViewById<EditText>(R.id.queue).setText(preferences.getString("Queue",""))
-           findViewById<EditText>(R.id.name).setText(preferences.getString("MyNickname",""))
-
+           LoadFromDeviceSettings()
        }
+
+        findViewById<CheckBox>(R.id.useMessagingApiCheckBox).setOnCheckedChangeListener { buttonView, isChecked ->
+            useMessagingApi = isChecked
+            findViewById<EditText>(R.id.orgid).isVisible = !useMessagingApi
+            findViewById<EditText>(R.id.queue).isVisible = !useMessagingApi
+            preferences.edit {
+                putBoolean("messagingApi",useMessagingApi)
+                apply()
+            }
+
+            if(!preferences.contains("VideoengagerUrl")) {//load defaults from params.json
+                if(useMessagingApi) {
+                    LoadDefaultMessagingSettings()
+                }else{
+                    LoadDefaultSettings()
+                }
+            }else
+            {
+                //load modified
+                LoadFromDeviceSettings()
+            }
+         }
+
+        if(preferences.contains("messagingApi")){
+            findViewById<CheckBox>(R.id.useMessagingApiCheckBox).isChecked = preferences.getBoolean("messagingApi",false)
+        }
 
         findViewById<Button>(R.id.buttonaudio).setOnClickListener {
             // audio mode only
@@ -85,7 +99,7 @@ class GCActivity : AppCompatActivity() {
             if(SmartVideo.IsInCall){
                 Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
             }else {
-                SmartVideo.Initialize(this, sett, Engine.genesys)
+                SmartVideo.Initialize(this, sett, if(useMessagingApi) Engine.genesys_messenger else Engine.genesys)
                 if (SmartVideo.Connect(CallType.audio) == true) {
                     SmartVideo.onEventListener = listener
                 } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
@@ -108,7 +122,7 @@ class GCActivity : AppCompatActivity() {
             if(SmartVideo.IsInCall){
                 Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
             }else {
-                SmartVideo.Initialize(this, sett, Engine.genesys)
+                SmartVideo.Initialize(this, sett, if(useMessagingApi) Engine.genesys_messenger else Engine.genesys)
                 if (SmartVideo.Connect(CallType.video) == true) {
                     SmartVideo.onEventListener = listener
                 } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
@@ -120,7 +134,7 @@ class GCActivity : AppCompatActivity() {
             if(SmartVideo.IsInCall){
                 Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
             }else {
-                SmartVideo.Initialize(this, sett, Engine.genesys)
+                SmartVideo.Initialize(this, sett, if(useMessagingApi) Engine.genesys_messenger else Engine.genesys)
 
                 if (SmartVideo.Connect(CallType.chat)) {
                     SmartVideo.onEventListener = object : VideoEngager.EventListener() {
@@ -276,6 +290,38 @@ class GCActivity : AppCompatActivity() {
         }
     }
 
+    private fun LoadFromDeviceSettings() {
+        findViewById<EditText>(R.id.orgid).setText(preferences.getString("OrganizationId", ""))
+        findViewById<EditText>(R.id.depid).setText(preferences.getString("DeploymentId", ""))
+        findViewById<EditText>(R.id.videourl).setText(preferences.getString("VideoengagerUrl", ""))
+        findViewById<EditText>(R.id.tenid).setText(preferences.getString("TennathId", ""))
+        findViewById<EditText>(R.id.env).setText(preferences.getString("Environment", ""))
+        findViewById<EditText>(R.id.queue).setText(preferences.getString("Queue", ""))
+        findViewById<EditText>(R.id.name).setText(preferences.getString("MyNickname", ""))
+    }
+
+    private fun LoadDefaultMessagingSettings() {
+        Globals.params?.genesys_cloud_messaging_params_init?.let {
+            findViewById<EditText>(R.id.depid).setText(it.DeploymentId)
+            findViewById<EditText>(R.id.videourl).setText(it.VideoengagerUrl)
+            findViewById<EditText>(R.id.tenid).setText(it.TennathId)
+            findViewById<EditText>(R.id.env).setText(it.Environment)
+            findViewById<EditText>(R.id.name).setText(it.MyNickname)
+        }
+    }
+
+    private fun LoadDefaultSettings() {
+        Globals.params?.genesys_cloud_params_init?.let {
+            findViewById<EditText>(R.id.orgid).setText(it.OrganizationId)
+            findViewById<EditText>(R.id.depid).setText(it.DeploymentId)
+            findViewById<EditText>(R.id.videourl).setText(it.VideoengagerUrl)
+            findViewById<EditText>(R.id.tenid).setText(it.TennathId)
+            findViewById<EditText>(R.id.env).setText(it.Environment)
+            findViewById<EditText>(R.id.queue).setText(it.Queue)
+            findViewById<EditText>(R.id.name).setText(it.MyNickname)
+        }
+    }
+
     private val scheduleCallbackAnswer = object : Answer() {
         override fun onSuccessResult(result: Result) {
             runOnUiThread {
@@ -333,7 +379,7 @@ class GCActivity : AppCompatActivity() {
     }
 
     private fun readSettings(){
-        Globals.params?.genesys_cloud_params_init?.let {
+        (if(useMessagingApi) Globals.params?.genesys_cloud_messaging_params_init else Globals.params?.genesys_cloud_params_init)?.let {
             sett = Settings(
                 findViewById<EditText>(R.id.orgid).text.toString(),
                 findViewById<EditText>(R.id.depid).text.toString(),
@@ -391,6 +437,10 @@ class GCActivity : AppCompatActivity() {
         }
 
         override fun onErrorMessage(type: String, message: String) {
+            Toast.makeText(this@GCActivity, message, Toast.LENGTH_SHORT).show()
+        }
+
+        override fun onMessageAndTimeStampReceived(timestamp: String, message: String) {
             Toast.makeText(this@GCActivity, message, Toast.LENGTH_SHORT).show()
         }
 

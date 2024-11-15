@@ -24,4 +24,5 @@
     <string name="availability">Availability</string>
     <string name="pause_screen_shae">pause screen share</string>
     <string name="resume_screen_share">resume screen share</string>
+    <string name="messaging_api">Use MESSAGING API</string>
 </resources>
