@@ -38,7 +38,7 @@ class WebChat : AppCompatActivity() {
                 finish()
             }
 
-            override fun onMessageReceived(message: String) {
+            override fun onMessageAndTimeStampReceived(timestamp: String, message: String) {
                 chatBox.append("${Globals.agentName}->${message}\n")
                 scrollView.post {
                     scrollView.fullScroll(View.FOCUS_DOWN)
@@ -47,8 +47,6 @@ class WebChat : AppCompatActivity() {
                     SmartVideo.VeVisitorVideoCall(message)
                 }
             }
-
-
         }
 
         findViewById<ImageButton>(R.id.exit_button).setOnClickListener { onBackPressed() }

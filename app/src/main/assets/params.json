@@ -1,4 +1,12 @@
 {
+"genesys_cloud_messaging_params_init": {
+  "AgentShortURL": "mobiledev",
+  "DeploymentId": "88d171f0-3139-45e2-beac-1f44d0bb41be",
+  "Environment": "https://apps.mypurecloud.com",
+  "CustomerName": "Android Demo Tester",
+  "TennathId": "0FphTk091nt7G1W7",
+  "VideoengagerUrl": "https://videome.videoengager.com"
+},
 "genesys_cloud_params_init": {
   "AgentShortURL": "mobiledev",
   "DeploymentId": "973f8326-c601-40c6-82ce-b87e6dafef1c",

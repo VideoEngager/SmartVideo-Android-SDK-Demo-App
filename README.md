@@ -9,6 +9,7 @@ The VideoEngager SDK for Android allows you to integrate SmartVideo application 
 * Click to video
 * Short Url call
 * supports Genesys Cloud
+* supports Genesys Cloud Web Messaging API
 * supports Genesys Cloud Schedule Callbacks
 * support SmartVideo standalone
 * supports Genesys Engage
@@ -38,7 +39,7 @@ Add the necessary artifact into your `build.gradle` file:
 ```
 dependencies {
     ....
-    implementation 'com.videoengager:smartvideo-sdk:1.17.1'
+    implementation 'com.videoengager:smartvideo-sdk:1.18.1'
 }
 ```
 **Note**: `minSdkVersion` for the Android SDK is 21 (Android 5.0 "Lollipop").
@@ -85,6 +86,19 @@ If you want to configure the demo app to run with your own Genesys Cloud organiz
 | OrganizationId (required)    | String          |  Your GenesysCloud organization Id |
 | Deployment ID (required)     | String          | Your SmartVideo deployment Id |
 
+### Run within the VideoEngage Genesys Cloud organization with WEB Messaging channel
+If you want to configure the demo app to run with your own Genesys Cloud organization, then `assets/params.json` file shall be updated to provide the correct parameters of your organization.
+
+
+| Name                        | Type            | Value      |
+| --------------------------- | --------------- | ---------------------------------------------------------------- |
+| VideoengagerUrl (required)   | String          | `https://videome.videoengager.com` (unless you have a custom subdomain)  |
+| TennathId (required)         | String          | `hbvvUTaZxCVLikpB` |
+| AgentShortURL (required)     | String          | `mobiledev`   |
+| Environment  (required)      | String          | `https://apps.mypurecloud.com` or your preferred Genesys Cloud location |
+| Deployment ID (required)     | String          | Your MESSAGING channel deployment Id |
+
+
 For more details on how to obtain some of your specific parameters, please consult with your Genesys Cloud administrator or refer to our [HelpDesk article](https://help.videoengager.com/hc/en-us/articles/360061175891-How-to-obtain-my-Genesys-Cloud-Parameters-required-to-setup-SmartVideo-SDKs).
 
 
@@ -94,10 +108,11 @@ After installation and configuration is done, it is time to integrate the SmartV
 
 
 The SmartVideo SDK will expose the following functionalities to hosting Android/Kotlin/ app:
-* place a voice call to VideoEngager standalone or Genesys Cloud queue
-* place a video call to to VideoEngager standalone or Genesys Cloud queue
-* send chat message to a Genesys Cloud agent over Genesys Cloud chat channel
-* receive chat message from a Genesys Cloud agent over Genesys Cloud chat channel
+* place a voice call to VideoEngager standalone, Genesys Cloud queue or Genesys Cloud web messaging channel
+* place a video call to to VideoEngager standalone, Genesys Cloud queue or Genesys Cloud web messaging channel
+* send chat message to a Genesys Cloud agent over Genesys Cloud chat channel or Genesys Cloud web messaging channel
+* receive chat message from a Genesys Cloud agent over Genesys Cloud chat channel or Genesys Cloud web messaging channel
+
 
 By integrating `VideoEngager.EventListener`, Android developers will get an expose to a few more methods that will be covered in section [Error Handling](#Error-Handling).
 
@@ -118,6 +133,7 @@ This would require to add inside your Activity the following code snippets:
 ```Kotlin
 
 import com.videoengager.sdk.VideoEngager
+import com.videoengager.sdk.SmartVideo
 import com.videoengager.sdk.model.Settings
 import com.videoengager.sdk.tools.LangUtils
 import com.videoengager.sdk.model.Settings
@@ -125,7 +141,8 @@ import com.videoengager.sdk.model.Settings
 data class Params(
   val genesys_cloud_params_init:Settings,
   val generic_params_init:Settings,
-  val genesys_engage_params_init:Settings
+  val genesys_engage_params_init:Settings,
+  val genesys_cloud_messaging_params_init:Settings,
 )
 
 //....
@@ -162,29 +179,70 @@ val listener = object : VideoEngager.EventListener(){
   }
 }
 
-findViewById<Button>(R.id.button_audio).setOnClickListener {
+/////////////////// Genesys Cloud Chat Channel /////////////////////
+
+fun StartAudioCallOverGenesysChatChannel() {
   //allow more verbose debug Logcat messages 
-  VideoEngager.SDK_DEBUG=true
+  SmartVideo.SDK_DEBUG=true
   //change some additional values like preferred Language
   params.genesys_cloud_params_init!!.Language=VideoEngager.Language.ENGLISH
-  val video = VideoEngager(this, params.genesys_cloud_params_init!!, VideoEngager.Engine.genesys)
-  if (video.Connect(VideoEngager.CallType.audio)) {
-      //handle events with event listener
-    video.onEventListener = listener
-  } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  if(SmartVideo.IsInCall){
+      Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+  }else {
+      SmartVideo.Initialize(this, params.genesys_cloud_params_init, Engine.genesys)
+      if (SmartVideo.Connect(CallType.audio) == true) {
+          SmartVideo.onEventListener = listener
+      } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  }
 }
 
-findViewById<Button>(R.id.button_video).setOnClickListener {
+fun StartVideoCallOverGenesysChatChannel() {
   //allow more verbose debug Logcat messages 
-  VideoEngager.SDK_DEBUG=true
+  SmartVideo.SDK_DEBUG=true
   //change some additional values like preferred Language
   params.genesys_cloud_params_init!!.Language=VideoEngager.Language.ENGLISH
-  val video = VideoEngager(this, params.genesys_cloud_params_init!!, VideoEngager.Engine.genesys)
-  if (video.Connect(VideoEngager.CallType.video)) {
-    //handle events with event listener
-    video.onEventListener = listener
-  } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  if(SmartVideo.IsInCall){
+      Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+  }else {
+      SmartVideo.Initialize(this, params.genesys_cloud_params_init, Engine.genesys)
+      if (SmartVideo.Connect(CallType.video) == true) {
+          SmartVideo.onEventListener = listener
+      } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  }
 }
+
+/////////////////// Genesys Cloud WEB Messaging Channel /////////////////////
+
+fun StartAudioCallOverGenesysWebMessagingChannel() {
+  //allow more verbose debug Logcat messages 
+  SmartVideo.SDK_DEBUG=true
+  //change some additional values like preferred Language
+  params.genesys_cloud_messaging_params_init!!.Language=VideoEngager.Language.ENGLISH
+  if(SmartVideo.IsInCall){
+      Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+  }else {
+      SmartVideo.Initialize(this, params.genesys_cloud_messaging_params_init, Engine.genesys_messenger)
+      if (SmartVideo.Connect(CallType.audio) == true) {
+          SmartVideo.onEventListener = listener
+      } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  }
+}
+
+fun StartVideoCallOverGenesysWebMessagingChannel() {
+  //allow more verbose debug Logcat messages 
+  SmartVideo.SDK_DEBUG=true
+  //change some additional values like preferred Language
+  params.genesys_cloud_messaging_params_init!!.Language=VideoEngager.Language.ENGLISH
+  if(SmartVideo.IsInCall){
+      Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+  }else {
+      SmartVideo.Initialize(this, params.genesys_cloud_messaging_params_init, Engine.genesys_messenger)
+      if (SmartVideo.Connect(CallType.video) == true) {
+          SmartVideo.onEventListener = listener
+      } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  }
+}
+
 
 ```
 
@@ -241,11 +299,7 @@ val listener = object : VideoEngager.EventListener(){
         override fun onChatAccepted(){
             //fires when agetn accept chat interaction  
         }
-        
-        override fun onMessageReceived(message:String){
-            //fires when agent send chat message
-        }
-        
+      
         override fun onMessageAndTimeStampReceived(timestamp: String,message:String){
             //same as "onMessageReceived" but with timestamp of message
         }
@@ -307,37 +361,41 @@ This feature is used for "Escalation from WebChat/SMS/Email channel to video cal
 To implement this feature you must do these steps:
 * Add following to your ```AndroidManifest.xml``` for activity that plays with SmartVideo SDK:
 ```xml
-        <activity
-            android:name=".<YOURSMARTVIDEO Activity>"
-            android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter android:label="SmartVideo Call"
-                android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="https"
-                    android:host="videome.videoengager.com"
-                    android:pathPrefix="/ve/" />
-                <data
-                    android:scheme="https"
-                    android:host="videome.leadsecure.com"
-                    android:pathPrefix="/ve/" />
-            </intent-filter>
-        </activity>
+<activity
+    android:name=".<YOURSMARTVIDEO Activity>"
+    android:screenOrientation="portrait"
+    android:exported="true">
+    <intent-filter android:label="SmartVideo Call"
+        android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data
+            android:scheme="https"
+            android:host="videome.videoengager.com"
+            android:pathPrefix="/ve/" />
+        <data
+            android:scheme="https"
+            android:host="videome.leadsecure.com"
+            android:pathPrefix="/ve/" />
+    </intent-filter>
+</activity>
 ```
 
 * Add following logic to corresponding activity to handle deep link requests :
 ```kotlin
-   //handle deep links
-      if(intent.action== Intent.ACTION_VIEW && intent.data!=null){
-          val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-          if(video.Connect(VideoEngager.CallType.video)) {
-              video.onEventListener = listener
-              video.VeVisitorVideoCall(intent.dataString?:"")
-          }else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  //handle deep links
+  if(intent.action== Intent.ACTION_VIEW && intent.data!=null){
+      if (SmartVideo.IsInCall) {
+          Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+      } else {
+          SmartVideo.Initialize(this, sett, Engine.generic)
+          if (SmartVideo.Connect(CallType.video)) {
+              SmartVideo.onEventListener = listener
+              SmartVideo.VeVisitorVideoCall(intent.dataString ?: "")
+          } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
       }
+  }
 ```
 
 * Send to VideoEngager following information:
@@ -355,12 +413,34 @@ If your users receives special VeVisitorVideoCall Url you can pass it in ```VeVi
 Example:
 ```kotlin
 val veVisitorUrl="https://videome.leadsecure.com/ve/aBcDef"
-val video = VideoEngager(this,sett, VideoEngager.Engine.generic)
-if(video.Connect(VideoEngager.CallType.video)) {
-    video.onEventListener = listener
-    video.VeVisitorVideoCall(veVisitorUrl)
-}else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+if (SmartVideo.IsInCall) {
+    Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+} else {
+    SmartVideo.Initialize(this, sett, Engine.generic)
+    if (SmartVideo.Connect(CallType.video)) {
+        SmartVideo.onEventListener = listener
+        SmartVideo.VeVisitorVideoCall(veVisitorUrl.text.toString())
+    } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+}
 ```
+
+### PIN code call
+You can use this method of SDK to make you own implementation for Escalation or Schedule scenarios.
+If your users receives special `PIN code` you can pass it in ```VeVisitorVideoCall(Url:String)``` and SDK will call associated Agent.
+Example:
+```kotlin
+val PIN="1234"
+if (SmartVideo.IsInCall) {
+    Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+} else {
+    SmartVideo.Initialize(this, sett, Engine.generic)
+    if (SmartVideo.Connect(CallType.video)) {
+        SmartVideo.onEventListener = listener
+        SmartVideo.VeVisitorVideoCall(PIN)
+    } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+}
+```
+
 
 ### Schedule callback
 We provide several methods to request schedule meeting with Genesys Cloud Agent.
