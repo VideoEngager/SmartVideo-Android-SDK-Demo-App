@@ -20,7 +20,9 @@
         <activity
             android:name=".TDActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".F9Activity"
+            android:exported="false" />
         <service
             android:name=".PushNotificationsReceiverService"
             android:enabled="true"

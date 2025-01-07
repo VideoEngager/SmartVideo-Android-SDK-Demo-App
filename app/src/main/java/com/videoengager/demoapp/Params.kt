@@ -12,4 +12,5 @@ data class Params(
     val generic_params_init:Settings,
     val genesys_engage_params_init:Settings,
     val genesys_cloud_messaging_params_init:Settings,
+    val five9_params_init:Settings
 )
