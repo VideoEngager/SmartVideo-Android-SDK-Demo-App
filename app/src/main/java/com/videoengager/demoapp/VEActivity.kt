@@ -22,6 +22,7 @@ import com.videoengager.sdk.enums.CallType
 import com.videoengager.sdk.enums.Engine
 import com.videoengager.sdk.model.Error
 import com.videoengager.sdk.tools.LangUtils
+import io.ktor.http.Url
 import org.acra.ACRA
 import java.util.*
 
@@ -32,7 +33,8 @@ class VEActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_v_e)
-        window.applyCustomColors(getSharedPreferences("additional", MODE_PRIVATE))
+        val prefs = getSharedPreferences("additional", MODE_PRIVATE)
+        window.applyCustomColors(prefs)
         SmartVideo.SDK_DEBUG = true
         preferences = getSharedPreferences("ve_preferences", MODE_PRIVATE)
         val gc_preferences = getSharedPreferences("genesys_cloud", MODE_PRIVATE)
@@ -104,6 +106,10 @@ class VEActivity : AppCompatActivity() {
             if (SmartVideo.IsInCall) {
                 Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
             } else {
+                Url(intent.dataString!!).let {
+                    sett.VideoengagerUrl = it.protocol.name.plus("://").plus(it.host)
+                    sett.TennathId = prefs.getString("last_used_tenant", sett.TennathId)
+                }
                 SmartVideo.Initialize(this, sett, Engine.generic)
                 if (SmartVideo.Connect(CallType.video)) {
                     SmartVideo.onEventListener = listener

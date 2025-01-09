@@ -70,6 +70,10 @@ class F9Activity : AppCompatActivity() {
             }
         }
 
+        additionalSettings.edit{
+            putString("last_used_tenant",findViewById<EditText>(R.id.tenid).text.toString())
+            apply()
+        }
     }
 
     private fun readSettings(){
@@ -99,6 +103,11 @@ class F9Activity : AppCompatActivity() {
             putString("name",findViewById<EditText>(R.id.name).text.toString())
             putString("tenid",findViewById<EditText>(R.id.tenid).text.toString())
             putString("videourl",findViewById<EditText>(R.id.videourl).text.toString())
+            apply()
+        }
+
+        additionalSettings.edit{
+            putString("last_used_tenant",findViewById<EditText>(R.id.tenid).text.toString())
             apply()
         }
 

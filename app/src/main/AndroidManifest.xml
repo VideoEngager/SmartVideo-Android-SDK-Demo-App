@@ -63,6 +63,8 @@
                 <data android:scheme="https" />
                 <data android:host="videome.leadsecure.com" />
                 <data android:host="videome.videoengager.com" />
+                <data android:host="staging.leadsecure.com" />
+                <data android:host="staging.videoengager.com" />
                 <data android:host="davivienda.videoengager.com" />
                 <data android:pathPrefix="/ve/" />
             </intent-filter>
