@@ -101,8 +101,6 @@ If you want to configure the demo app to run with your own Genesys Cloud organiz
 
 For more details on how to obtain some of your specific parameters, please consult with your Genesys Cloud administrator or refer to our [HelpDesk article](https://help.videoengager.com/hc/en-us/articles/360061175891-How-to-obtain-my-Genesys-Cloud-Parameters-required-to-setup-SmartVideo-SDKs).
 
-
-
 ## Get started with SmartVideo SDK
 After installation and configuration is done, it is time to integrate the SmartVideo SDK within your own app. Easiest would be to use the demo app in this repository. If you want to do so, pls open with AndroidStudio SmartVideo-Android-SDK-Demo-App Project and Run it.
 
@@ -246,7 +244,40 @@ fun StartVideoCallOverGenesysWebMessagingChannel() {
 
 ```
 
-### Additional settings
+## Configure to use with Five9 Call Center
+### Run within the VideoEngage Five9 organization
+If you want to configure the demo app to run with your own Five9 organization, then `assets/params.json` file shall be updated to provide the correct parameters of your organization.
+
+
+| Name                        | Type            | Value      |
+| --------------------------- | --------------- | ---------------------------------------------------------------- |
+| VideoengagerUrl (required)   | String          | `https://staging.videoengager.com` (unless you have a custom subdomain)  |
+| TennathId (required)         | String          | `bDKTmeyuDEx5tegq` |
+| Environment  (required)      | String          | `https://app-scl.five9.com` or your preferred Five9 location |
+| Queue  (required     )       | String          | `Sample_IB_Camp` Here you need to provide the name of your Five9 queue. This the queue that is setup to process SmartVideo interactions |
+| OrganizationId (required)    | String          |  `VideoEngager ISV Domain` Your Five9 organization domain name |
+
+```Kotlin
+// ....
+
+fun StartVideoCallToFive9Center() {
+  //allow more verbose debug Logcat messages 
+  SmartVideo.SDK_DEBUG=true
+  //change some additional values like preferred Language
+  params.five9_params_init!!.Language=VideoEngager.Language.ENGLISH
+  if(SmartVideo.IsInCall){
+      Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
+  }else {
+      SmartVideo.Initialize(this, params.five9_params_init, Engine.five9)
+      if (SmartVideo.Connect(CallType.video) == true) {
+          SmartVideo.onEventListener = listener
+      } else Toast.makeText(this, "Error from connection", Toast.LENGTH_SHORT).show()
+  }
+}
+
+```
+
+# Additional SDK settings
 SDK customizations are available with some additional parameters in ```Settings.class```:
 ```Kotlin
 //Map of KeyValues sent as headers with start of interaction 

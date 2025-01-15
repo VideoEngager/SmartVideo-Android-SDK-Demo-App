@@ -20,7 +20,9 @@
         <activity
             android:name=".TDActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".F9Activity"
+            android:exported="false" />
         <service
             android:name=".PushNotificationsReceiverService"
             android:enabled="true"
@@ -61,6 +63,8 @@
                 <data android:scheme="https" />
                 <data android:host="videome.leadsecure.com" />
                 <data android:host="videome.videoengager.com" />
+                <data android:host="staging.leadsecure.com" />
+                <data android:host="staging.videoengager.com" />
                 <data android:host="davivienda.videoengager.com" />
                 <data android:pathPrefix="/ve/" />
             </intent-filter>

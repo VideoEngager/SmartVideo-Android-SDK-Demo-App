@@ -23,6 +23,14 @@
    "VideoengagerUrl":"https://videome.videoengager.com"
    },
 "genesys_engage_params_init":{},
+"five9_params_init":{
+  "OrganizationId":"VideoEngager ISV Domain",
+  "Queue":"Sample_IB_Camp",
+  "Environment":"https://app-scl.five9.com",
+  "CustomerName":"Android Mobile Tester",
+  "TennathId":"bDKTmeyuDEx5tegq",
+  "VideoengagerUrl":"https://staging.leadsecure.com"
+},
 "supported_languages":{
 	"ENGLISH":"en_US",    
 	"GERMAN":"de_DE",    

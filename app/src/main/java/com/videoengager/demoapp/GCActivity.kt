@@ -288,6 +288,11 @@ class GCActivity : AppCompatActivity() {
             }
             SmartVideo.VeStartCoBrowse()
         }
+
+        additionalSettings.edit{
+            putString("last_used_tenant",findViewById<EditText>(R.id.tenid).text.toString())
+            apply()
+        }
     }
 
     private fun LoadFromDeviceSettings() {
@@ -404,6 +409,12 @@ class GCActivity : AppCompatActivity() {
                 putString("MyNickname",findViewById<EditText>(R.id.name).text.toString())
                 apply()
             }
+
+            additionalSettings.edit{
+                putString("last_used_tenant",findViewById<EditText>(R.id.tenid).text.toString())
+                apply()
+            }
+
             //load additional settings
             sett.AvatarImageUrl = additionalSettings.getString("avatarImageUrl",null)
             sett.informationLabelText = additionalSettings.getString("informationLabelText",null)

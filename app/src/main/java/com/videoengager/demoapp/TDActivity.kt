@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.widget.addTextChangedListener
 import com.videoengager.sdk.SmartVideo
@@ -31,7 +32,8 @@ class TDActivity : AppCompatActivity(),CobrowseIO.Redacted {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_td)
-        window.applyCustomColors(getSharedPreferences("additional", MODE_PRIVATE))
+        val prefs = getSharedPreferences("additional", MODE_PRIVATE)
+        window.applyCustomColors(prefs)
         val tdPrefs = getSharedPreferences("talkdesk",MODE_PRIVATE)
         val sett=Globals.params?.genesys_cloud_params_init!!
         sett.Language = MainActivity.Lang?: VideoEngager.Language.ENGLISH
@@ -41,6 +43,10 @@ class TDActivity : AppCompatActivity(),CobrowseIO.Redacted {
         tenantBox.addTextChangedListener {
             tdPrefs.edit().putString("tenant",it.toString()).apply()
             Globals.params?.genesys_cloud_params_init?.TennathId = it.toString()
+            prefs.edit{
+                putString("last_used_tenant",tenantBox.text.toString())
+                apply()
+            }
         }
         flowIdBox.addTextChangedListener {
             tdPrefs.edit().putString("flow",it.toString()).apply()
@@ -55,7 +61,10 @@ class TDActivity : AppCompatActivity(),CobrowseIO.Redacted {
             sett.flowId=flowIdBox.text.toString()
             sett.TennathId = tenantBox.text.toString()
             sett.VideoengagerUrl="https://videome.leadsecure.com"
-
+            prefs.edit{
+                putString("last_used_tenant",tenantBox.text.toString())
+                apply()
+            }
             if (SmartVideo.IsInCall) {
                 Toast.makeText(this, "Call is in progress!", Toast.LENGTH_SHORT).show()
             } else {

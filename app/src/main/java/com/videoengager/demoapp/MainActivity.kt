@@ -72,6 +72,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,TDActivity::class.java))
         }
 
+        findViewById<ImageButton>(R.id.button_f9).apply {
+            prefs.getInt("modelTypeIndex",0).let {
+                isVisible = (it==0 || it==5)
+            }
+        }.setOnClickListener {
+            startActivity(Intent(this,F9Activity::class.java))
+        }
+
         findViewById<Button>(R.id.button_settings).setOnClickListener {
             startActivity(Intent(this,AdditionalSettingsActivity::class.java))
         }
