@@ -60,31 +60,10 @@ These permissions should be added to the application's `AndroidManifext.xml` fil
 ## Configure to use with your Genesys Cloud Center
 
 ### Run within the VideoEngage Genesys Cloud organization
-The demo app comes with pre-configured Genesys Cloud account, within the Video Engager organization. To quickly test the demo app, one needs to:
-* visit Genesys Cloud [https://login.mypurecloud.com/](https://login.mypurecloud.com/)
-* login as agent, by using the following credentials
-  * username: mobiledev@videoengager.com
-  * password: [ask Video Engager support team to obtain your password](mailto:support@videoengager.com)
-* clone and compile this project without any change of parameters in `assets/params.json`
-* run the compiled project in his/her Android Phone
-* select `Genesys Cloud` and tap on `Start Video` or `Start Audio` button.
+The demo app comes with pre-configured Genesys Cloud account, within the Video Engager organization. To quickly test the demo app please [request a demo](https://www.videoengager.com/)
 
 Please refer to the following video, from one of our webinars to get a better understand of how to use it the Android SDK.
 
-
-### Run within the VideoEngage Genesys Cloud organization
-If you want to configure the demo app to run with your own Genesys Cloud organization, then `assets/params.json` file shall be updated to provide the correct parameters of your organization.
-
-
-| Name                        | Type            | Value      |
-| --------------------------- | --------------- | ---------------------------------------------------------------- |
-| VideoengagerUrl (required)   | String          | `https://videome.videoengager.com` (unless you have a custom subdomain)  |
-| TennathId (required)         | String          | `hbvvUTaZxCVLikpB` |
-| AgentShortURL (required)     | String          | `mobiledev`   |
-| Environment  (required)      | String          | `https://api.mypurecloud.com` or your preferred Genesys Cloud location |
-| Queue  (required     )       | String          | Here you need to provide the name of your GenesysCloud queue. This the queue that is setup to process SmartVideo interactions |
-| OrganizationId (required)    | String          |  Your GenesysCloud organization Id |
-| Deployment ID (required)     | String          | Your SmartVideo deployment Id |
 
 ### Run within the VideoEngage Genesys Cloud organization with WEB Messaging channel
 If you want to configure the demo app to run with your own Genesys Cloud organization, then `assets/params.json` file shall be updated to provide the correct parameters of your organization.
@@ -93,7 +72,7 @@ If you want to configure the demo app to run with your own Genesys Cloud organiz
 | Name                        | Type            | Value      |
 | --------------------------- | --------------- | ---------------------------------------------------------------- |
 | VideoengagerUrl (required)   | String          | `https://videome.videoengager.com` (unless you have a custom subdomain)  |
-| TennathId (required)         | String          | `hbvvUTaZxCVLikpB` |
+| TennathId (required)         | String          | Your TenantId |
 | AgentShortURL (required)     | String          | `mobiledev`   |
 | Environment  (required)      | String          | `https://apps.mypurecloud.com` or your preferred Genesys Cloud location |
 | Deployment ID (required)     | String          | Your MESSAGING channel deployment Id |
